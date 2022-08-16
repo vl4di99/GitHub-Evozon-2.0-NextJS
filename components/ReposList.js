@@ -1,4 +1,4 @@
-import { reposArr } from "../mockRepos";
+import { reposArr } from "../pages/mockRepos";
 import { Repo } from "./Repo";
 
 export const ReposList = () => {

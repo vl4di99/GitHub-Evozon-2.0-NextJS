@@ -1,6 +1,5 @@
-import { blue, blueGrey } from "@mui/material/colors";
 import Container from "@mui/material/Container";
-import { ReposList } from "./components/ReposList";
+import { ReposList } from "../components/ReposList";
 
 export default function Repos() {
   return (

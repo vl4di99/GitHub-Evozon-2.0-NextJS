@@ -1,10 +1,13 @@
+import { StyledEngineProvider } from "@mui/material";
 import { RecoilRoot } from "recoil";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
   return (
     <RecoilRoot>
-      <Component {...pageProps} />
+      <StyledEngineProvider injectFirst>
+        <Component {...pageProps} />
+      </StyledEngineProvider>
     </RecoilRoot>
   );
 }

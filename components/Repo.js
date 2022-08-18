@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import { Button, Typography, CircularProgress } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import Languages from "./LanguagesRatio/Languages";
 import { useRecoilValue } from "recoil";
 import { gitUser } from "../atoms/repository";

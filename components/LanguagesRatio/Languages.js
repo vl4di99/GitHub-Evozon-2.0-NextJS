@@ -1,4 +1,3 @@
-import { CircularProgress } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { LanguageRatio } from "./LanguageRatio";
@@ -14,12 +13,6 @@ const Languages = ({ repo }) => {
   useEffect(() => {
     getLanguages();
   }, []);
-
-  // const data = {
-  //   JavaScript: 3071,
-  //   CSS: 2659,
-  //   HTML: 1530,
-  // };
 
   Object.values(data).map((value) => {
     languagesSum += value;

@@ -2,7 +2,6 @@ import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 import { getSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { gitUser } from "../../atoms/repository";

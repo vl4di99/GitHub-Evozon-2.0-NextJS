@@ -4,12 +4,15 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import { Button, Typography, CircularProgress } from "@mui/material";
 import Languages from "./LanguagesRatio/Languages";
+import { useRecoilValue } from "recoil";
+import { gitUser } from "../atoms/repository";
 
 export const Repo = ({ repo }) => {
   const router = useRouter();
+  const userURL = useRecoilValue(gitUser);
 
   const clickHandler = () => {
-    router.push(`/${user}/${repo.name}`);
+    router.push(`/${userURL}/${repo.name}`);
   };
 
   return (

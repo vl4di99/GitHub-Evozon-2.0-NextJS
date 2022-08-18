@@ -1,5 +1,6 @@
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
+import axios from "axios";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -11,6 +12,7 @@ function Repos({ url, data }) {
   const [filterBy, setFilterBy] = useState("");
   const [userURL, setUserURL] = useRecoilState(gitUser);
   setUserURL(url);
+  console.log(data);
 
   const handleChange = (event) => {
     setFilterBy(event.target.value);
@@ -40,15 +42,17 @@ export async function getServerSideProps(context) {
   const session = await getSession(context);
   const url = context.params.username;
   let headersAx = {};
+  let resData = {};
 
   if (session) {
     headersAx = { Authorization: `Bearer ${session.accessToken}` };
 
-    await axios({
+    const response = await axios({
       method: "get",
       url: `https://api.github.com/users/${url}/repos`,
       headers: headersAx,
-    }).then((res) => console.log(`response is ${res}`));
+    });
+    resData = response.data;
   }
 
   return {
@@ -56,7 +60,7 @@ export async function getServerSideProps(context) {
       session,
       headersAx,
       url,
-      // data,
+      data: resData,
     },
   };
 }

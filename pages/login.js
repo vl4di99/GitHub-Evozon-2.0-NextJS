@@ -1,23 +1,6 @@
-import {
-  getSession,
-  signIn,
-  useSession,
-  getProviders,
-  signOut,
-} from "next-auth/react";
-import { useRouter } from "next/router";
-import { useRecoilValue } from "recoil";
-import { gitUser, repoName } from "../atoms/repository";
+import { signIn, getProviders } from "next-auth/react";
 
 function Login({ providers }) {
-  const user = useRecoilValue(gitUser);
-  const repo = useRecoilValue(repoName);
-  const router = useRouter();
-
-  const enter = () => {
-    router.push(`/${user}/${repo}`);
-  };
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen w-full bg-slate-200">
       {Object.values(providers).map((provider) => (
@@ -37,8 +20,6 @@ function Login({ providers }) {
           </button>
         </div>
       ))}
-      <div onClick={enter}>This is a div. Click me</div>
-      <div onClick={signOut}>Sign Out</div>
     </div>
   );
 }

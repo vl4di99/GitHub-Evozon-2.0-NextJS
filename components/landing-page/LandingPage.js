@@ -1,16 +1,21 @@
 import React, { useRef, useState } from "react";
 import axios from "axios";
 
+import { useRouter } from "next/router";
+import Image from "next/image";
+
 import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
-import FormControl from "@mui/material/FormControl";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import CustomizedSnackbars from "../customized-snakebars/CustomizedSnakebars";
 import { Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import { useRouter } from "next/router";
+import LoginIcon from "@mui/icons-material/Login";
+
+import githubIcon from "../../images/github-icon.png";
+import githubBackground from "../../images/github-background.jpg";
 
 function LandingPage() {
   const [functionEntered, setFunctionEntered] = useState(false);
@@ -20,7 +25,7 @@ function LandingPage() {
 
   const router = useRouter();
 
-  const getUserData = (userUrl) => {
+  const getUserData = (userUrl, userName) => {
     axios
       .get(userUrl)
       .then((response) => {
@@ -28,7 +33,7 @@ function LandingPage() {
         console.log(response.data);
         setUserExist(true);
         setFunctionEntered(true);
-        router.push(`/${enteredUsername.current.value}`);
+        router.push(`/${userName}`);
       })
       .catch(function (error) {
         if (error.response) {
@@ -45,34 +50,57 @@ function LandingPage() {
   };
 
   const checkUserExist = () => {
-    let userGitUrl = `https://api.github.com/users/${enteredUsername.current.value}/repos`;
-    getUserData(userGitUrl);
+    const userName = enteredUsername.current.value;
+    let userGitUrl = `https://api.github.com/users/${userName}/repos`;
+    getUserData(userGitUrl, userName);
     console.log(userDataResponse);
+    setFunctionEntered(false);
   };
 
   return (
     <section className="flex h-screen items-center justify-center flex-col ">
-      <Box sx={{ "& > :not(style)": { m: 1 } }}>
-        <InputLabel htmlFor="input-with-icon-adornment">
-          Enter your GitHub username
-        </InputLabel>
-        <Input
-          id="input-with-icon-adornment"
-          inputRef={enteredUsername}
-          startAdornment={
-            <InputAdornment position="start">
-              <AccountCircle />
-            </InputAdornment>
-          }
-        />
-        <Button
-          variant="contained"
-          endIcon={<SendIcon />}
-          onClick={checkUserExist}
-        >
-          Send
-        </Button>
-      </Box>
+      <Image
+        src={githubBackground}
+        alt="github background"
+        layout="fill"
+        objectFit="cover"
+        objectPosition="center"
+        className="z-0"
+      />
+      <div className="absolute rounded-lg bg-black bg-opacity-10 top-[170px] bg-radiu">
+        <Box sx={{ "& > :not(style)": { m: 1 } }} className="">
+          <InputLabel
+            htmlFor="input-with-icon-adornment"
+            className="pl-2px text-red-600 m-0  "
+          >
+            Enter your GitHub username
+          </InputLabel>
+          <Input
+            className="text-blue-600 text-lg "
+            id="input-with-icon-adornment"
+            inputRef={enteredUsername}
+            startAdornment={
+              <InputAdornment position="start">
+                <Image
+                  src={githubIcon}
+                  alt="git logo"
+                  width="30px"
+                  height="30px"
+                  className="m-0 -pl-2 font-bold"
+                />
+              </InputAdornment>
+            }
+          />
+          <Button
+            variant="contained"
+            endIcon={<LoginIcon />}
+            onClick={checkUserExist}
+            className="bg-blue-700 bottom-2 text-sm m-0 p-1"
+          >
+            Search
+          </Button>
+        </Box>
+      </div>
       {functionEntered && <CustomizedSnackbars userExist={userExist} />}
     </section>
   );

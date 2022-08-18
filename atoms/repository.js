@@ -7,7 +7,7 @@ export const repoName = atom({
 
 export const gitUser = atom({
   key: "gitUsername",
-  default: "vl4di99",
+  default: null,
 });
 
 export const repoInfo = atom({

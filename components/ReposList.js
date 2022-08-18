@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
-import { reposArr } from "../pages/mockRepos";
+
 import { Repo } from "./Repo";
 import axios from "axios";
 import { getSession, useSession } from "next-auth/react";
 
 export const ReposList = ({ filterBy, data }) => {
-  const [reposToShow, setReposToShow] = useState(reposArr);
+  const initialData = data;
+  const [reposToShow, setReposToShow] = useState(data);
 
   useEffect(() => {
-    const newArr = reposArr.filter((repo) =>
+    const newArr = initialData.filter((repo) =>
       repo.name.toLowerCase().includes(filterBy.toLowerCase())
     );
     setReposToShow(newArr);

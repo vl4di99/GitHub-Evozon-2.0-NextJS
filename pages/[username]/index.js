@@ -12,7 +12,6 @@ function Repos({ url, data }) {
   const [filterBy, setFilterBy] = useState("");
   const [userURL, setUserURL] = useRecoilState(gitUser);
   setUserURL(url);
-  console.log(data);
 
   const handleChange = (event) => {
     setFilterBy(event.target.value);

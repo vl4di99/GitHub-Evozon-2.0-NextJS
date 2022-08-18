@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 
 import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
@@ -9,8 +8,6 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import CustomizedSnackbars from "../customized-snakebars/CustomizedSnakebars";
-
-import { userNameState } from "../../atoms/UserName";
 
 function LandingPage() {
   const [enterKeyPressed, setEnterKeyPressed] = useState(null);

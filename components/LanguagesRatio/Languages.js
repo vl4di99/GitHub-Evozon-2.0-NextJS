@@ -4,22 +4,22 @@ import { useEffect, useState } from "react";
 import { LanguageRatio } from "./LanguageRatio";
 
 const Languages = ({ repo }) => {
-  // const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
   let languagesSum = 0;
 
-  // const getLanguages = async () => {
-  //   await axios.get(repo.languages_url).then((res) => setData(res.data));
-  // };
-
-  // useEffect(() => {
-  //   getLanguages();
-  // }, []);
-
-  const data = {
-    JavaScript: 3071,
-    CSS: 2659,
-    HTML: 1530,
+  const getLanguages = async () => {
+    await axios.get(repo.languages_url).then((res) => setData(res.data));
   };
+
+  useEffect(() => {
+    getLanguages();
+  }, []);
+
+  // const data = {
+  //   JavaScript: 3071,
+  //   CSS: 2659,
+  //   HTML: 1530,
+  // };
 
   Object.values(data).map((value) => {
     languagesSum += value;

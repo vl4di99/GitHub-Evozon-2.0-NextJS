@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { reposArr } from "../pages/mockRepos";
 import { Repo } from "./Repo";
 
-export const ReposList = ({ filterBy }) => {
-  const [reposToShow, setReposToShow] = useState(reposArr);
+export const ReposList = ({ filterBy, data }) => {
+  const initialData = data;
+  const [reposToShow, setReposToShow] = useState(data);
 
   useEffect(() => {
-    const newArr = reposArr.filter((repo) =>
+    const newArr = initialData.filter((repo) =>
       repo.name.toLowerCase().includes(filterBy.toLowerCase())
     );
     setReposToShow(newArr);

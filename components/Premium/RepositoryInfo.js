@@ -11,6 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Container } from "@mui/system";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
@@ -19,7 +20,9 @@ import RepoData from "./RepoData";
 
 function RepositoryInfo({ avatar, curUrl, name }) {
   const [repoC, setRepoC] = useState([]);
+  const [repoCommits, setRepoCommits] = useState([]);
   const headersAx = useRecoilValue(axiosHeaders);
+
   const getRepoContents = async () => {
     await axios({
       method: "get",
@@ -28,8 +31,21 @@ function RepositoryInfo({ avatar, curUrl, name }) {
     }).then((res) => {
       setRepoC(res.data);
       console.log(res.data);
+      getRepoCommits();
     });
   };
+
+  const getRepoCommits = async () => {
+    await axios({
+      method: "get",
+      url: `https://api.github.com/repos${curUrl}/commits`,
+      headers: headersAx,
+    }).then((res) => {
+      setRepoCommits(res.data);
+      console.log(res.data);
+    });
+  };
+
   useEffect(() => {
     getRepoContents();
   }, []);
@@ -40,13 +56,11 @@ function RepositoryInfo({ avatar, curUrl, name }) {
         <Avatar
           src={avatar}
           alt="User Avatar"
-          className="border-4 border-stone-800 w-52 h-52 mt-10"
+          className="border-4 border-orange-200 w-52 h-52 m-8"
         />
-        <Typography variant="h5" className="mt-2">
-          {name}
-        </Typography>
+        <Typography variant="h5">{name}</Typography>
 
-        <Box className="flex justify-center m-5 min-w-full">
+        <Box className="flex justify-center m-5 w-8/12">
           <ThemeProvider
             theme={createTheme({
               palette: {
@@ -55,34 +69,37 @@ function RepositoryInfo({ avatar, curUrl, name }) {
               },
             })}
           >
-            <Paper elevation={10}>
-              <ListItem component="div" disablePadding>
-                <ListItemButton sx={{ height: 56 }}>
-                  <ListItemText
-                    primary="Repo Content"
-                    primaryTypographyProps={{
-                      fontWeight: "medium",
-                      variant: "body2",
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
-              <Divider />
-              <Box
-                sx={{
-                  bgcolor: "#fff",
-                  p: 2,
-                }}
-              >
-                {repoC.map((element) => (
-                  <RepoData
-                    name={element.name}
-                    html_url={element.html_url}
-                    type={element.type}
-                  />
-                ))}
-              </Box>
-            </Paper>
+            <Container maxWidth={false} cl>
+              <Paper elevation={10}>
+                <ListItem component="div" disablePadding>
+                  <ListItemButton sx={{ height: 56 }}>
+                    <ListItemText
+                      primary="Repo Content"
+                      primaryTypographyProps={{
+                        fontWeight: "medium",
+                        variant: "body2",
+                      }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+                <Divider />
+                <Box
+                  sx={{
+                    bgcolor: "#fff",
+                    p: 2,
+                  }}
+                >
+                  {repoC.map((element) => (
+                    <RepoData
+                      name={element.name}
+                      html_url={element.html_url}
+                      type={element.type}
+                      key={element.sha}
+                    />
+                  ))}
+                </Box>
+              </Paper>
+            </Container>
           </ThemeProvider>
         </Box>
       </div>

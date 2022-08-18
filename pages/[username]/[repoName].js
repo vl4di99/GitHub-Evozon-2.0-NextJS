@@ -44,9 +44,7 @@ function RepositoryName({ headersAx }) {
       </div>
     );
   } else {
-    return (
-      <div className="flex flex-col justify-start items-center min-h-screen"></div>
-    );
+    return <div className="flex flex-col"></div>;
   }
 }
 

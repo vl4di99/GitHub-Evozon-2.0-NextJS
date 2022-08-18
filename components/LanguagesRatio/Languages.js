@@ -28,7 +28,13 @@ const Languages = ({ repo }) => {
   return (
     <div className="languages-div flex space-x-2 px-4  ">
       {Object.entries(data).map((entry) => {
-        return <LanguageRatio language={entry} totalAmount={languagesSum} />;
+        return (
+          <LanguageRatio
+            language={entry}
+            totalAmount={languagesSum}
+            key={entry[0]}
+          />
+        );
       })}
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import axios from "axios";
 
 import Box from "@mui/material/Box";
@@ -8,31 +8,33 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import CustomizedSnackbars from "../customized-snakebars/CustomizedSnakebars";
+import { Button } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
+import { useRouter } from "next/router";
 
 function LandingPage() {
-  const [enterKeyPressed, setEnterKeyPressed] = useState(null);
+  const [functionEntered, setFunctionEntered] = useState(false);
   const [userExist, setUserExist] = useState(null);
   const [userDataResponse, setUserDataResponse] = useState([]);
+  const enteredUsername = useRef();
+
+  const router = useRouter();
 
   const getUserData = (userUrl) => {
     axios
       .get(userUrl)
       .then((response) => {
         setUserDataResponse(response.data);
-        console.log("user exist");
+        console.log(response.data);
         setUserExist(true);
+        setFunctionEntered(true);
+        router.push(`/${enteredUsername.current.value}`);
       })
       .catch(function (error) {
         if (error.response) {
-          console.log(error.response.data);
-
           setUserDataResponse(error.response);
           setUserExist(false);
-          console.log("no user found");
-
-          console.log(userDataResponse);
-          console.log(error.response.status);
-          console.log(error.response.headers);
+          setFunctionEntered(true);
         } else if (error.request) {
           console.log(error.request);
         } else {
@@ -42,40 +44,36 @@ function LandingPage() {
       });
   };
 
-  const checkUserExist = (event) => {
-    if (event.key === "Enter") {
-      console.log("Enter key was pressed");
-
-      let userGitUrl = `https://api.github.com/users/${event.target.value}/repos`;
-      getUserData(userGitUrl);
-      setEnterKeyPressed(true);
-    }
-    //setEnterKeyPressed(false);
+  const checkUserExist = () => {
+    let userGitUrl = `https://api.github.com/users/${enteredUsername.current.value}/repos`;
+    getUserData(userGitUrl);
     console.log(userDataResponse);
   };
 
   return (
     <section className="flex h-screen items-center justify-center flex-col ">
       <Box sx={{ "& > :not(style)": { m: 1 } }}>
-        <FormControl variant="standard">
-          <InputLabel htmlFor="input-with-icon-adornment">
-            Enter your GitHub username
-          </InputLabel>
-          <Input
-            id="input-with-icon-adornment"
-            onKeyUp={checkUserExist}
-            startAdornment={
-              <InputAdornment position="start">
-                <AccountCircle />
-              </InputAdornment>
-            }
-          />
-        </FormControl>
+        <InputLabel htmlFor="input-with-icon-adornment">
+          Enter your GitHub username
+        </InputLabel>
+        <Input
+          id="input-with-icon-adornment"
+          inputRef={enteredUsername}
+          startAdornment={
+            <InputAdornment position="start">
+              <AccountCircle />
+            </InputAdornment>
+          }
+        />
+        <Button
+          variant="contained"
+          endIcon={<SendIcon />}
+          onClick={checkUserExist}
+        >
+          Send
+        </Button>
       </Box>
-      <CustomizedSnackbars
-        userExist={userExist}
-        enterKeyPressed={enterKeyPressed}
-      />
+      {functionEntered && <CustomizedSnackbars userExist={userExist} />}
     </section>
   );
 }

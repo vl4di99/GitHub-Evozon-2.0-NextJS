@@ -8,8 +8,8 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function CustomizedSnackbars({ userExist, enterKeyPressed }) {
-  const [open, setOpen] = React.useState(enterKeyPressed);
+export default function CustomizedSnackbars({ userExist }) {
+  const [open, setOpen] = React.useState(true);
 
   //   const handleKeyEnter = () => {
   //     setOpen(true);
@@ -28,17 +28,16 @@ export default function CustomizedSnackbars({ userExist, enterKeyPressed }) {
       {/* <Button variant="outlined" onMouseEnter={handleMouseEnter}>
         Open success snackbar
       </Button> */}
-      {enterKeyPressed && (
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert
-            onClose={handleClose}
-            severity={userExist ? "success" : "error"}
-            sx={{ width: "100%" }}
-          >
-            {userExist ? "User found!" : "User not found, try again."}
-          </Alert>
-        </Snackbar>
-      )}
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        <Alert
+          onClose={handleClose}
+          severity={userExist ? "success" : "error"}
+          sx={{ width: "100%" }}
+        >
+          {userExist ? "User found!" : "User not found, try again."}
+        </Alert>
+      </Snackbar>
+
       {/* <Alert severity="error">This is an error message!</Alert>
       <Alert severity="warning">This is a warning message!</Alert>
       <Alert severity="info">This is an information message!</Alert>

@@ -1,4 +1,10 @@
-import { getSession, signIn, useSession, getProviders } from "next-auth/react";
+import {
+  getSession,
+  signIn,
+  useSession,
+  getProviders,
+  signOut,
+} from "next-auth/react";
 import { useRouter } from "next/router";
 import { useRecoilValue } from "recoil";
 import { gitUser, repoName } from "../atoms/repository";
@@ -32,6 +38,7 @@ function Login({ providers }) {
         </div>
       ))}
       <div onClick={enter}>This is a div. Click me</div>
+      <div onClick={signOut}>Sign Out</div>
     </div>
   );
 }

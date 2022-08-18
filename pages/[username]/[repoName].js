@@ -10,11 +10,12 @@ import { repoInfo, axiosHeaders } from "../../atoms/repository";
 
 function RepositoryName({ headersAx }) {
   const { data: session } = useSession();
+  const router = useRouter();
+  const path = router.asPath;
+
   const [response, setResponse] = useRecoilState(repoInfo);
   const [axiosH, setAxiosH] = useRecoilState(axiosHeaders);
-  const router = useRouter();
 
-  const path = router.asPath;
   const getRepo = async () => {
     await axios({
       method: "get",
@@ -28,9 +29,7 @@ function RepositoryName({ headersAx }) {
 
   useEffect(() => {
     setAxiosH(headersAx);
-    if (response === null) {
-      getRepo();
-    }
+    getRepo();
   }, []);
 
   if (session) {
@@ -54,11 +53,10 @@ function RepositoryName({ headersAx }) {
 export default RepositoryName;
 
 export async function getServerSideProps(context) {
-  let headersAx = {};
-
   const session = await getSession(context);
+  let headersAx = {};
   if (session) {
-    headersAx = { Authorization: `Bearer ${session?.access_token}` };
+    headersAx = { Authorization: `Bearer ${session.accessToken}` };
   }
 
   return {

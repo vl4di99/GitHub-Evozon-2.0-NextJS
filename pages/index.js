@@ -5,6 +5,7 @@ import styles from "../styles/Home.module.css";
 
 export default function Home() {
   const { data: session, status } = useSession();
+
   return (
     <div>
       <div className="bg-slate-400" onClick={signOut}>

@@ -17,16 +17,17 @@ export default (req, res) =>
       signIn: "/login",
     },
     callbacks: {
-      async jwt({ token, user }) {
+      jwt: async ({ token, user, account }) => {
         user && (token.user = user);
+        user && (token.accessToken = account.access_token);
         return token;
       },
-      async session({ session, token }) {
+      session: async ({ session, token }) => {
+        session.accessToken = token.accessToken;
         session.name = token.name;
         session.email = token.email;
         session.picture = token.picture;
         session.username = token.username;
-        session.access_token = token.accessToken;
         return session;
       },
       async redirect(url, baseUrl) {

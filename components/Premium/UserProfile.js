@@ -18,9 +18,12 @@ function UserProfile() {
   };
 
   return (
-    <div className="flex flex-row items-center justify-between p-3 bg-neutral-800">
+    <div className="flex flex-row items-center justify-between p-3 bg-[#24292f] pl-5 pr-5">
       <div className="flex flex-row justify-center items-center">
-        <Avatar src={gitLogoWhite} alt="White Git Logo" />
+        <Avatar
+          src="https://pngset.com/images-original/github-icon-white-github-icon-black-background-symbol-logo-trademark-steering-wheel-transparent-png-842663.png"
+          alt="White Git Logo"
+        />
       </div>
       <div className="flex flex-row justify-end items-center">
         <Button

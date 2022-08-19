@@ -67,18 +67,19 @@ function LandingPage() {
         objectPosition="center"
         className="z-0"
       />
-      <div className="absolute rounded-lg bg-black bg-opacity-10 top-[170px] bg-radiu">
+      <div className="absolute rounded-lg bg-black bg-opacity-10 top-[160px] bg-radiu">
         <Box sx={{ "& > :not(style)": { m: 1 } }} className="">
           <InputLabel
             htmlFor="input-with-icon-adornment"
-            className="pl-2px text-red-600 m-0  "
+            className="pl-2px text-black m-0  flex flex-col items-center font-bold text-lg"
           >
-            Enter your GitHub username
+            GitHub username
           </InputLabel>
           <Input
-            className="text-blue-600 text-lg "
+            className="text-fuchsia-800 text-lg "
             id="input-with-icon-adornment"
             inputRef={enteredUsername}
+            color="secondary"
             startAdornment={
               <InputAdornment position="start">
                 <Image
@@ -95,7 +96,7 @@ function LandingPage() {
             variant="contained"
             endIcon={<LoginIcon />}
             onClick={checkUserExist}
-            className="bg-blue-700 bottom-2 text-sm m-0 p-1"
+            className="bg-gradient-to-b from-fuchsia-900 to-purple-900 text-sm m-0 p-1 "
           >
             Search
           </Button>

@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { LanguageRatio } from "./LanguageRatio";
 
 const Languages = ({ repo }) => {
+  console.log("repo in languages is...");
+  console.log(repo);
+
   const [data, setData] = useState([]);
-  let languagesSum = 0;
 
   const getLanguages = async () => {
     await axios.get(repo.languages_url).then((res) => setData(res.data));
@@ -13,11 +15,19 @@ const Languages = ({ repo }) => {
   useEffect(() => {
     getLanguages();
   }, []);
+  console.log("data is");
+  console.log(data);
 
-  Object.values(data).map((value) => {
-    languagesSum += value;
-  });
-
+  console.log(Object.values(data));
+  const initialValue = 0;
+  const languagesSum = Object.values(data).reduce(
+    (previousValue, currentValue) => previousValue + currentValue,
+    initialValue
+  );
+  // Object.values(data).map((amount) => {
+  //   setLanguagesSum(languagesSum + amount);
+  // });
+  console.log(languagesSum);
   return (
     <div className="languages-div flex space-x-2 px-4  ">
       {Object.entries(data).map((entry) => {

@@ -15,10 +15,17 @@ import { Container } from "@mui/system";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { axiosHeaders, repoContent } from "../../atoms/repository";
+import {
+  axiosHeaders,
+  repoContent,
+  repoInfo,
+  repoName,
+} from "../../atoms/repository";
+import Languages from "../LanguagesRatio/Languages";
 import RepoData from "./RepoData";
 
 function RepositoryInfo({ avatar, curUrl, name }) {
+  const repo = useRecoilValue(repoInfo);
   const [repoC, setRepoC] = useState([]);
   const [repoCommits, setRepoCommits] = useState([]);
   const headersAx = useRecoilValue(axiosHeaders);
@@ -30,7 +37,6 @@ function RepositoryInfo({ avatar, curUrl, name }) {
       headers: headersAx,
     }).then((res) => {
       setRepoC(res.data);
-      console.log(res.data);
       getRepoCommits();
     });
   };
@@ -42,7 +48,7 @@ function RepositoryInfo({ avatar, curUrl, name }) {
       headers: headersAx,
     }).then((res) => {
       setRepoCommits(res.data);
-      console.log(res.data);
+      // console.log(res.data);
     });
   };
 
@@ -97,6 +103,7 @@ function RepositoryInfo({ avatar, curUrl, name }) {
                       key={element.sha}
                     />
                   ))}
+                  {repo ? <Languages repo={repo} /> : null}
                 </Box>
               </Paper>
             </Container>

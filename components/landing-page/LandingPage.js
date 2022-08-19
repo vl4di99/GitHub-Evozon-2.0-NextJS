@@ -8,10 +8,8 @@ import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import CustomizedSnackbars from "../customized-snakebars/CustomizedSnakebars";
 import { Button } from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
 import LoginIcon from "@mui/icons-material/Login";
 
 import githubIcon from "../../images/github-icon.png";
@@ -67,7 +65,7 @@ function LandingPage() {
         objectPosition="center"
         className="z-0"
       />
-      <div className="absolute rounded-lg bg-black bg-opacity-10 top-[160px] bg-radiu">
+      <div className="absolute rounded-lg bg-black bg-opacity-10 top-[160px]">
         <Box sx={{ "& > :not(style)": { m: 1 } }} className="">
           <InputLabel
             htmlFor="input-with-icon-adornment"

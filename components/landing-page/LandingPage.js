@@ -11,14 +11,19 @@ import CustomizedSnackbars from "../customized-snakebars/CustomizedSnakebars";
 import { Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { useRouter } from "next/router";
+import { useRecoilState } from "recoil";
+import { limitAPI } from "../../atoms/repository";
 
 function LandingPage() {
+  const router = useRouter();
+  const { limitReached = false } = router;
+  const [limitHasBeenReached, setLimitHasBeenReached] =
+    useRecoilState(limitAPI);
+
   const [functionEntered, setFunctionEntered] = useState(false);
   const [userExist, setUserExist] = useState(null);
   const [userDataResponse, setUserDataResponse] = useState([]);
   const enteredUsername = useRef();
-
-  const router = useRouter();
 
   const getUserData = (userUrl) => {
     axios
@@ -29,8 +34,10 @@ function LandingPage() {
         setUserExist(true);
         setFunctionEntered(true);
         router.push(`/${enteredUsername.current.value}`);
+        router.push({ limitReached: false });
       })
       .catch(function (error) {
+        router.push({ limitReached: true });
         if (error.response) {
           setUserDataResponse(error.response);
           setUserExist(false);

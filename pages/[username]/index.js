@@ -20,13 +20,14 @@ function Repos({ url, data }) {
     <Container sx={{ minHeight: "100vh" }}>
       <Container sx={{ minHeight: "100vh" }}>
         <h1 className="text-4xl pt-8 pb-4">{url}'s repos</h1>
-        <hr className="border-2 border-blue-500 rounded-md"></hr>
+        <hr className="border-2 border-fuchsia-700 rounded-md"></hr>
         <TextField
           id="demo-helper-text-misaligned-no-helper"
           label="Filter through the repos"
           className="my-4 w-full lg:w-3/6"
           name="message"
           onChange={handleChange}
+          color="secondary"
         />
         <ReposList filterBy={filterBy} data={data} />
       </Container>

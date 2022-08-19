@@ -24,3 +24,8 @@ export const axiosHeaders = atom({
   key: "axiosHeaders",
   default: null,
 });
+
+export const limitAPI = atom({
+  key: "LimitAPI",
+  default: false,
+});

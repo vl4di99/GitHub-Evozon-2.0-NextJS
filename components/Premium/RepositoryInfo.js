@@ -48,7 +48,6 @@ function RepositoryInfo({ avatar, curUrl, name }) {
       headers: headersAx,
     }).then((res) => {
       setRepoCommits(res.data);
-      // console.log(res.data);
     });
   };
 
@@ -62,7 +61,7 @@ function RepositoryInfo({ avatar, curUrl, name }) {
         <Avatar
           src={avatar}
           alt="User Avatar"
-          className="border-4 border-orange-200 w-52 h-52 m-8"
+          className="border-4 border-fuchsia-900 w-52 h-52 m-8"
         />
         <Typography variant="h5">{name}</Typography>
 
@@ -75,7 +74,7 @@ function RepositoryInfo({ avatar, curUrl, name }) {
               },
             })}
           >
-            <Container maxWidth={false} cl>
+            <Container maxWidth={false}>
               <Paper elevation={10}>
                 <ListItem component="div" disablePadding>
                   <ListItemButton sx={{ height: 56 }}>
@@ -90,6 +89,7 @@ function RepositoryInfo({ avatar, curUrl, name }) {
                 </ListItem>
                 <Divider />
                 <Box
+                  className="flex flex-col"
                   sx={{
                     bgcolor: "#fff",
                     p: 2,
@@ -103,7 +103,7 @@ function RepositoryInfo({ avatar, curUrl, name }) {
                       key={element.sha}
                     />
                   ))}
-                  {repo ? <Languages repo={repo} /> : null}
+                  {repo ? <Languages repo={repo} className="flex" /> : null}
                 </Box>
               </Paper>
             </Container>

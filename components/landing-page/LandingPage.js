@@ -28,7 +28,6 @@ function LandingPage() {
       .get(userUrl)
       .then((response) => {
         setUserDataResponse(response.data);
-        // console.log(response.data);
         setUserExist(true);
         setFunctionEntered(true);
         router.push(`/${userName}`);
@@ -65,7 +64,8 @@ function LandingPage() {
         objectPosition="center"
         className="z-0"
       />
-      <div className="absolute rounded-lg bg-black bg-opacity-10 top-[160px]">
+
+      <div className="absolute rounded-lg bg-black bg-opacity-10 top-[23%] sm:top-[23%] md:top-[23%] lg:top-[23%] xl:top-[23%] 2xl:top-[22%]">
         <Box sx={{ "& > :not(style)": { m: 1 } }} className="">
           <InputLabel
             htmlFor="input-with-icon-adornment"

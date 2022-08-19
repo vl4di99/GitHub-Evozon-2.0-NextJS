@@ -30,7 +30,7 @@ function LandingPage() {
       .get(userUrl)
       .then((response) => {
         setUserDataResponse(response.data);
-        console.log(response.data);
+        // console.log(response.data);
         setUserExist(true);
         setFunctionEntered(true);
         router.push(`/${userName}`);

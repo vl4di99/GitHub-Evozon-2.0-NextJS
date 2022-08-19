@@ -1,12 +1,13 @@
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
-import { useRouter } from "next/router";
+import axios from "axios";
+import { getSession } from "next-auth/react";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { gitUser } from "../../atoms/repository";
 import { ReposList } from "../../components/ReposList";
 
-function Repos({ url }) {
+function Repos({ url, data }) {
   const [filterBy, setFilterBy] = useState("");
   const [userURL, setUserURL] = useRecoilState(gitUser);
   setUserURL(url);
@@ -27,7 +28,7 @@ function Repos({ url }) {
           name="message"
           onChange={handleChange}
         />
-        <ReposList filterBy={filterBy} />
+        <ReposList filterBy={filterBy} data={data} />
       </Container>
     </Container>
   );
@@ -36,11 +37,28 @@ function Repos({ url }) {
 export default Repos;
 
 export async function getServerSideProps(context) {
-  let url = context.params.username;
+  const session = await getSession(context);
+  const url = context.params.username;
+  let headersAx = {};
+  let resData = {};
+
+  if (session) {
+    headersAx = { Authorization: `Bearer ${session.accessToken}` };
+
+    const response = await axios({
+      method: "get",
+      url: `https://api.github.com/users/${url}/repos`,
+      headers: headersAx,
+    });
+    resData = response.data;
+  }
 
   return {
     props: {
-      url: url,
+      session,
+      headersAx,
+      url,
+      data: resData,
     },
   };
 }

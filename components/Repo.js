@@ -21,7 +21,10 @@ export const Repo = ({ repo }) => {
       variant="outlined"
     >
       <CardContent className="p-0 px-2">
-        <Typography color="#3B81F6" className="text-xl font-semibold mb-4 p-2">
+        <Typography
+          color="secondary"
+          className="text-xl font-semibold mb-4 p-2"
+        >
           {repo.name}
         </Typography>
         <Languages repo={repo} />

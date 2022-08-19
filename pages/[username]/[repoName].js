@@ -6,7 +6,8 @@ import RepositoryInfo from "../../components/Premium/RepositoryInfo";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { repoInfo, axiosHeaders } from "../../atoms/repository";
+import { repoInfo, axiosHeaders, limitAPI } from "../../atoms/repository";
+import checkHeaders from "../../hooks/checkHeaders";
 
 function RepositoryName({ headersAx }) {
   const { data: session } = useSession();
@@ -14,17 +15,27 @@ function RepositoryName({ headersAx }) {
   const path = router.asPath;
 
   const [response, setResponse] = useRecoilState(repoInfo);
-  const [axiosH, setAxiosH] = useRecoilState(axiosHeaders);
+  const [, setAxiosH] = useRecoilState(axiosHeaders);
+  const [, setLimited] = useRecoilState(limitAPI);
+
+  const header = checkHeaders();
 
   const getRepo = async () => {
     await axios({
       method: "get",
       url: `https://api.github.com/repos${path}`,
-      headers: headersAx,
-    }).then((res) => {
-      setResponse(res.data);
-      console.log(res.data);
-    });
+      headers: header,
+    })
+      .then((res) => {
+        setResponse(res.data);
+        console.log(res.data);
+      })
+      .catch((error) => {
+        if (error.response.status === 403) {
+          setLimited(true);
+          router.push("/limitReached");
+        }
+      });
   };
 
   useEffect(() => {

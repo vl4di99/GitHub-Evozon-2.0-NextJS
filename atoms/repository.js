@@ -26,6 +26,6 @@ export const axiosHeaders = atom({
 });
 
 export const limitAPI = atom({
-  key: "LimitAPI",
+  key: "limitAPI",
   default: false,
 });

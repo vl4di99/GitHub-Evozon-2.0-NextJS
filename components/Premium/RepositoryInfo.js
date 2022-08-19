@@ -16,18 +16,19 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { axiosHeaders, repoContent } from "../../atoms/repository";
+import checkHeaders from "../../hooks/checkHeaders";
 import RepoData from "./RepoData";
 
 function RepositoryInfo({ avatar, curUrl, name }) {
   const [repoC, setRepoC] = useState([]);
   const [repoCommits, setRepoCommits] = useState([]);
-  const headersAx = useRecoilValue(axiosHeaders);
+  const header = checkHeaders();
 
   const getRepoContents = async () => {
     await axios({
       method: "get",
       url: `https://api.github.com/repos${curUrl}/contents`,
-      headers: headersAx,
+      headers: header,
     }).then((res) => {
       setRepoC(res.data);
       console.log(res.data);
@@ -39,7 +40,7 @@ function RepositoryInfo({ avatar, curUrl, name }) {
     await axios({
       method: "get",
       url: `https://api.github.com/repos${curUrl}/commits`,
-      headers: headersAx,
+      headers: header,
     }).then((res) => {
       setRepoCommits(res.data);
       console.log(res.data);

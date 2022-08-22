@@ -1,19 +1,16 @@
+import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { gitUser } from "../atoms/repository";
+import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
 import * as React from "react";
+const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
+import Box from "@mui/material/Box";
 import axios from "axios";
 import IconButton from "@mui/material/IconButton";
-import Box from "@mui/material/Box";
-import { useState } from "react";
 import { getSession } from "next-auth/react";
-import { useRecoilState } from "recoil";
-import { gitUser } from "../../atoms/repository";
-import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import Container from "@mui/material/Container";
-import TextField from "@mui/material/TextField";
-import { ReposList } from "../../components/ReposList";
-
-const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
 function Repos({ url, data }) {
   const [filterBy, setFilterBy] = useState("");
@@ -55,11 +52,10 @@ function Repos({ url, data }) {
           )}
         </IconButton>
       </div>
-
       <Container sx={{ minHeight: "100vh" }}>
         <Container sx={{ minHeight: "100vh" }}>
           <h1 className="text-4xl pt-8 pb-4">{url}'s repos</h1>
-          <hr className="border-2 border-fuchsia-700 rounded-md"></hr>
+          {/* <hr className="border-2 border-fuchsia-700 rounded-md"></hr>
           <TextField
             id="demo-helper-text-misaligned-no-helper"
             label="Filter through the repos"
@@ -68,52 +64,14 @@ function Repos({ url, data }) {
             onChange={handleChange}
             color="secondary"
           />
-          <ReposList filterBy={filterBy} data={data} theme={theme} />
+          <ReposList filterBy={filterBy} data={data} /> */}
         </Container>
       </Container>
     </Box>
   );
 }
 
-export default function ToggleColorMode({ url, data }) {
-  const [mode, setMode] = React.useState("light");
-  const colorMode = React.useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
-      },
-    }),
-    []
-  );
-
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-        },
-        typography: {
-          // fontSize: 20,
-        },
-        components: {
-          MuiButtonBase: {
-            defaultProps: {
-              // disableRipple: true,
-            },
-          },
-        },
-      }),
-    [mode]
-  );
-
-  return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        <Repos url={url} data={data} />
-      </ThemeProvider>
-    </ColorModeContext.Provider>
-  );
-}
+export default Repos;
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);

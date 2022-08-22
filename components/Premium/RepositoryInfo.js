@@ -15,23 +15,23 @@ import { Container } from "@mui/system";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { axiosHeaders, repoContent } from "../../atoms/repository";
-import checkHeaders from "../../hooks/checkHeaders";
+import { axiosHeaders, repoInfo } from "../../atoms/repository";
+import Languages from "../LanguagesRatio/Languages";
 import RepoData from "./RepoData";
 
 function RepositoryInfo({ avatar, curUrl, name }) {
+  const repo = useRecoilValue(repoInfo);
   const [repoC, setRepoC] = useState([]);
-  const [repoCommits, setRepoCommits] = useState([]);
-  const header = checkHeaders();
+  const [, setRepoCommits] = useState([]);
+  const headersAx = useRecoilValue(axiosHeaders);
 
   const getRepoContents = async () => {
     await axios({
       method: "get",
       url: `https://api.github.com/repos${curUrl}/contents`,
-      headers: header,
+      headers: headersAx,
     }).then((res) => {
       setRepoC(res.data);
-      console.log(res.data);
       getRepoCommits();
     });
   };
@@ -43,7 +43,6 @@ function RepositoryInfo({ avatar, curUrl, name }) {
       headers: header,
     }).then((res) => {
       setRepoCommits(res.data);
-      console.log(res.data);
     });
   };
 
@@ -57,7 +56,7 @@ function RepositoryInfo({ avatar, curUrl, name }) {
         <Avatar
           src={avatar}
           alt="User Avatar"
-          className="border-4 border-orange-200 w-52 h-52 m-8"
+          className="border-4 border-fuchsia-900 w-52 h-52 m-8"
         />
         <Typography variant="h5">{name}</Typography>
 
@@ -70,7 +69,7 @@ function RepositoryInfo({ avatar, curUrl, name }) {
               },
             })}
           >
-            <Container maxWidth={false} cl>
+            <Container maxWidth={false}>
               <Paper elevation={10}>
                 <ListItem component="div" disablePadding>
                   <ListItemButton sx={{ height: 56 }}>
@@ -85,6 +84,7 @@ function RepositoryInfo({ avatar, curUrl, name }) {
                 </ListItem>
                 <Divider />
                 <Box
+                  className="flex flex-col"
                   sx={{
                     bgcolor: "#fff",
                     p: 2,
@@ -98,6 +98,7 @@ function RepositoryInfo({ avatar, curUrl, name }) {
                       key={element.sha}
                     />
                   ))}
+                  {repo ? <Languages repo={repo} className="flex" /> : null}
                 </Box>
               </Paper>
             </Container>

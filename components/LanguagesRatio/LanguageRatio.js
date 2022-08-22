@@ -30,7 +30,7 @@ export const LanguageRatio = ({ language, totalAmount }) => {
           value={languagePercent}
           text={`${languagePercent}%`}
           styles={buildStyles({
-            textColor: "#3B81F6",
+            textColor: "#000",
             pathColor: getColor(),
           })}
         />

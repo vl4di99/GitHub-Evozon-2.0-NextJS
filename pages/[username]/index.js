@@ -7,17 +7,12 @@ import { useRecoilState } from "recoil";
 import { gitUser, limitAPI } from "../../atoms/repository";
 import UserProfile from "../../components/Premium/UserProfile";
 import { ReposList } from "../../components/ReposList";
-import redirectForMiddleware from "../../hooks/redirectForMiddleware";
 
-function Repos({ url, data, errorData }) {
+function Repos({ url, data }) {
   const { data: session } = useSession();
   const [filterBy, setFilterBy] = useState("");
   const [userURL, setUserURL] = useRecoilState(gitUser);
   setUserURL(url);
-
-  if (errorData === 403) {
-    redirectForMiddleware();
-  }
 
   const handleChange = (event) => {
     setFilterBy(event.target.value);
@@ -50,7 +45,6 @@ export async function getServerSideProps(context) {
   const session = await getSession(context);
   const url = context.params.username;
   let resData = {};
-  let errorData = "";
 
   if (session) {
     let headersAx = { Authorization: `Bearer ${session.accessToken}` };
@@ -61,23 +55,12 @@ export async function getServerSideProps(context) {
       headers: headersAx,
     });
     resData = response.data;
-  } else {
-    try {
-      const response = await axios({
-        method: "get",
-        url: `https://api.github.com/users/${url}/repos`,
-      });
-      resData = response.data;
-    } catch (error) {
-      errorData = error.response.status;
-    }
   }
 
   return {
     props: {
       url,
       data: resData,
-      errorData,
     },
   };
 }

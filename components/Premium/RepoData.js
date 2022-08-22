@@ -20,7 +20,7 @@ function RepoData({ name, html_url, type }) {
     <ListItem disablePadding>
       <ListItemButton sx={{ p: 1 }} href={html_url}>
         <ListItemIcon sx={{ color: "inherit" }}>
-          {dirType && <FolderIcon color="primary" />}
+          {dirType && <FolderIcon color="secondary" />}
           {fileType && <InsertDriveFileIcon />}
         </ListItemIcon>
         <ListItemText

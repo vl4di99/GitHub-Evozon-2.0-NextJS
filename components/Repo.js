@@ -31,7 +31,7 @@ export const Repo = ({ repo }) => {
       </CardContent>
       <CardActions>
         <Button size="small" onClick={clickHandler}>
-          details
+          More Details...
         </Button>
       </CardActions>
     </Card>

@@ -17,6 +17,10 @@ function UserProfile() {
     setAnchorEl(null);
   };
 
+  const handleSignOut = () => {
+    signOut();
+  };
+
   return (
     <div className="flex flex-row items-center justify-between p-3 bg-[#24292f] pl-5 pr-5">
       <div className="flex flex-row justify-center items-center">
@@ -54,7 +58,7 @@ function UserProfile() {
             </Typography>
           </MenuItem>
           <MenuItem onClick={handleClose}>My account</MenuItem>
-          <MenuItem onClick={signOut}>
+          <MenuItem onClick={handleSignOut}>
             Logout <LogoutIcon className="ml-5" />
           </MenuItem>
         </Menu>

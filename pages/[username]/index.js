@@ -13,14 +13,10 @@ function Repos({ url, data, errorData }) {
   const { data: session } = useSession();
   const [filterBy, setFilterBy] = useState("");
   const [userURL, setUserURL] = useRecoilState(gitUser);
-  const [limited, setLimited] = useRecoilState(limitAPI);
   setUserURL(url);
 
   if (errorData === 403) {
-    setLimited(true);
     redirectForMiddleware();
-  } else {
-    setLimited(false);
   }
 
   const handleChange = (event) => {
@@ -79,7 +75,6 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      session,
       url,
       data: resData,
       errorData,

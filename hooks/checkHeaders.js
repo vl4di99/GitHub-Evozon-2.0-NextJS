@@ -1,11 +1,14 @@
-function checkHeaders(ses) {
-  let returned = undefined;
-  if (ses) {
-    returned = { Authorization: `Bearer ${ses.accessToken}` };
+import { useSession } from "next-auth/react";
+
+function checkHeaders() {
+  const { data: session } = useSession();
+  let returnedHeader = undefined;
+  if (session) {
+    returnedHeader = { Authorization: `Bearer ${session.accessToken}` };
   } else {
-    returned = { "Content-Type": "application/x-www-form-urlencoded" };
+    returnedHeader = { "Content-Type": "application/x-www-form-urlencoded" };
   }
-  return returned;
+  return returnedHeader;
 }
 
 export default checkHeaders;

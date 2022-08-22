@@ -6,17 +6,16 @@ import RepositoryInfo from "../../components/Premium/RepositoryInfo";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { repoInfo, axiosHeaders, limitAPI } from "../../atoms/repository";
+import { repoInfo, axiosHeaders } from "../../atoms/repository";
 import checkHeaders from "../../hooks/checkHeaders";
 
-function RepositoryName({ headersAx }) {
+function RepositoryName() {
   const { data: session } = useSession();
   const router = useRouter();
   const path = router.asPath;
 
   const [response, setResponse] = useRecoilState(repoInfo);
   const [, setAxiosH] = useRecoilState(axiosHeaders);
-  const [, setLimited] = useRecoilState(limitAPI);
 
   const header = checkHeaders();
 
@@ -31,10 +30,7 @@ function RepositoryName({ headersAx }) {
         console.log(res.data);
       })
       .catch((error) => {
-        if (error.response.status === 403) {
-          setLimited(true);
-          router.push("/limitReached");
-        }
+        console.log(error.response);
       });
   };
 
@@ -60,18 +56,3 @@ function RepositoryName({ headersAx }) {
 }
 
 export default RepositoryName;
-
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-  let headersAx = {};
-  if (session) {
-    headersAx = { Authorization: `Bearer ${session.accessToken}` };
-  }
-
-  return {
-    props: {
-      session,
-      headersAx,
-    },
-  };
-}

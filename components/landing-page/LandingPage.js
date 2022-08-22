@@ -14,10 +14,7 @@ import LoginIcon from "@mui/icons-material/Login";
 
 import githubIcon from "../../images/github-icon.png";
 import githubBackground from "../../images/github-background.jpg";
-import redirectForMiddleware from "../../hooks/redirectForMiddleware";
 import checkHeaders from "../../hooks/checkHeaders";
-import { useRecoilState } from "recoil";
-import { limitAPI } from "../../atoms/repository";
 import UserProfile from "../Premium/UserProfile";
 import { useSession } from "next-auth/react";
 
@@ -27,9 +24,6 @@ function LandingPage() {
   const [userExist, setUserExist] = useState(null);
   const [userDataResponse, setUserDataResponse] = useState([]);
   const enteredUsername = useRef();
-  const [limited, setLimited] = useRecoilState(limitAPI);
-
-  redirectForMiddleware();
 
   const router = useRouter();
   const header = checkHeaders(session);
@@ -42,15 +36,12 @@ function LandingPage() {
     })
       .then((response) => {
         setUserDataResponse(response.data);
-        console.log(response);
         setUserExist(true);
         setFunctionEntered(true);
-        setLimited(false);
         router.push(`/${userName}`);
       })
       .catch(function (error) {
         if (error.response.status === 403) {
-          setLimited(true);
           router.push("limitReached");
         } else if (error.response) {
           setUserDataResponse(error.response);
@@ -74,8 +65,9 @@ function LandingPage() {
   };
 
   return (
-    <section className="flex h-screen items-center justify-center flex-col ">
+    <section className="relative flex h-screen items-center justify-center flex-col ">
       {session && <UserProfile />}
+
       <Image
         src={githubBackground}
         alt="github background"
@@ -84,8 +76,9 @@ function LandingPage() {
         objectPosition="center"
         className="z-0"
       />
-      <div className="absolute rounded-lg bg-black bg-opacity-10 top-[160px]">
-        <Box sx={{ "& > :not(style)": { m: 1 } }} className="">
+
+      <div className="absolute rounded-lg bg-black bg-opacity-10 top-[23%] sm:top-[23%] md:top-[23%] lg:top-[23%] xl:top-[20%] 2xl:top-[23%] 1k4:top-[20%] 1k4/6:top-[25%] 1k9:top-[25%] 2k:top-[25%] 4k:top-[30%]">
+        <Box sx={{ "& > :not(style)": { m: 1 } }}>
           <InputLabel
             htmlFor="input-with-icon-adornment"
             className="pl-2px text-black m-0  flex flex-col items-center font-bold text-lg"

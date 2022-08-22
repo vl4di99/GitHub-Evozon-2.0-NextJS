@@ -31,7 +31,7 @@ export default (req, res) =>
         return session;
       },
       async redirect(url, baseUrl) {
-        return "/";
+        return "successLogin";
       },
     },
   });

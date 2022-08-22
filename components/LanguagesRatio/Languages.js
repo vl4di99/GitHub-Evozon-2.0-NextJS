@@ -1,20 +1,19 @@
 import axios from "axios";
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import checkHeaders from "../../hooks/checkHeaders";
+import { useRecoilValue } from "recoil";
+import { axiosHeaders } from "../../atoms/repository";
 import { LanguageRatio } from "./LanguageRatio";
 
 const Languages = ({ repo }) => {
-  const { data: session } = useSession();
   const [data, setData] = useState([]);
+  const headersAx = useRecoilValue(axiosHeaders);
 
   const getLanguages = async () => {
-    let header = checkHeaders(session);
     await axios
       .get({
         method: "get",
         url: repo.languages_url,
-        headers: header,
+        headers: headersAx,
       })
       .then((res) => setData(res.data))
       .catch((err) => console.log(err));

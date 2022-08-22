@@ -8,6 +8,7 @@ import { useRecoilValue } from "recoil";
 import { gitUser } from "../atoms/repository";
 
 export const Repo = ({ repo }) => {
+  console.log("Repo is:    ", repo);
   const router = useRouter();
   const userURL = useRecoilValue(gitUser);
 

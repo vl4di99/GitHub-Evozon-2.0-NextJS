@@ -14,9 +14,10 @@ import LoginIcon from "@mui/icons-material/Login";
 
 import githubIcon from "../../images/github-icon.png";
 import githubBackground from "../../images/github-background.jpg";
-import checkHeaders from "../../hooks/checkHeaders";
 import UserProfile from "../Premium/UserProfile";
 import { useSession } from "next-auth/react";
+import { useRecoilValue } from "recoil";
+import { axiosHeaders } from "../../atoms/repository";
 
 function LandingPage() {
   const { data: session } = useSession();
@@ -24,21 +25,27 @@ function LandingPage() {
   const [userExist, setUserExist] = useState(null);
   const [userDataResponse, setUserDataResponse] = useState([]);
   const enteredUsername = useRef();
+  const headersAx = useRecoilValue(axiosHeaders);
 
   const router = useRouter();
-  const header = checkHeaders();
 
   const getUserData = async (userUrl, userName) => {
     await axios({
       method: "get",
       url: userUrl,
-      headers: header,
+      headers: headersAx,
     })
       .then((response) => {
         setUserDataResponse(response.data);
         setUserExist(true);
         setFunctionEntered(true);
-        router.push(`/${userName}`);
+        setTimeout(function () {
+          if (session) {
+            router.push(`/${userName}`);
+          } else {
+            router.push(`/login`);
+          }
+        }, 500);
       })
       .catch(function (error) {
         if (error.response.status === 403) {
@@ -67,7 +74,6 @@ function LandingPage() {
   return (
     <section className="relative flex h-screen items-center justify-center flex-col ">
       {session && <UserProfile />}
-
       <Image
         src={githubBackground}
         alt="github background"

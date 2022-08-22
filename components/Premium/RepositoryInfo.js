@@ -40,7 +40,7 @@ function RepositoryInfo({ avatar, curUrl, name }) {
     await axios({
       method: "get",
       url: `https://api.github.com/repos${curUrl}/commits`,
-      headers: header,
+      headers: headersAx,
     }).then((res) => {
       setRepoCommits(res.data);
     });

@@ -7,7 +7,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <SessionProvider session={pageProps.session}>
       <RecoilRoot>
-        <StyledEngineProvider injectFirst>
+        <StyledEngineProvider>
           <Component {...pageProps} />
         </StyledEngineProvider>
       </RecoilRoot>

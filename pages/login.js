@@ -38,7 +38,9 @@ function Login({ providers }) {
               variant="contained"
               endIcon={<LoginIcon />}
               className="bg-gradient-to-b from-fuchsia-900 to-purple-900 text-lg m-2 p-4 mt-5 opacity-100"
-              onClick={() => signIn(provider.id, { callbackUrl: "/" })}
+              onClick={() =>
+                signIn(provider.id, { callbackUrl: "/successLogin" })
+              }
             >
               Login with {provider.name}
             </Button>

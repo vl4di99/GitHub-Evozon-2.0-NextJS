@@ -1,12 +1,10 @@
-import { useSession } from "next-auth/react";
 import { useRecoilState } from "recoil";
 import { axiosHeaders } from "../atoms/repository";
 
-function checkHeaders() {
-  const { data: session } = useSession();
-  const [headersAx, setHeadersAx] = useRecoilState(axiosHeaders);
+function checkHeaders(sess) {
+  const [, setHeadersAx] = useRecoilState(axiosHeaders);
   let returnedHeader = undefined;
-  if (session) {
+  if (sess) {
     returnedHeader = { Authorization: `Bearer ${session.accessToken}` };
   } else {
     returnedHeader = { "Content-Type": "application/x-www-form-urlencoded" };

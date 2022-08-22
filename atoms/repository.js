@@ -22,5 +22,5 @@ export const repoContent = atom({
 
 export const axiosHeaders = atom({
   key: "axiosHeaders",
-  default: null,
+  default: {},
 });

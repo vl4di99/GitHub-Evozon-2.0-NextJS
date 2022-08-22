@@ -35,7 +35,7 @@ function Profile({ data }) {
           </Box>
         </Box>
         <Box className="mt-28">
-          <Typography className="font-mono" variant="h5">
+          <Typography className="font-mono mb-2" variant="h5">
             Popular repositories
           </Typography>
 

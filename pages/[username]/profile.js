@@ -6,22 +6,21 @@ import axios from "axios";
 
 import { Avatar, Box, Typography } from "@mui/material";
 import { Container } from "@mui/system";
-import { StyledEngineProvider } from "@mui/material/styles";
-
 import { ProfileCardList } from "../../components/profile-cards/ProfileCardList";
 
 function Profile({ data }) {
   const { data: session } = useSession();
+  const userData = data.userData;
   const reposData = data.reposData;
   const userAvatar = data.userData?.avatar_url;
   const userName = data.userData?.name;
   const userLoginName = data.userData?.login;
 
   return (
-    <StyledEngineProvider injectFirst>
-      <Container>
-        <Box className="flex flex-col flex-start align-center m-0 p-0">
-          <Box className="ml-16">
+    <Container className="w-screen h-screen">
+      <Box className="flex pb-4">
+        <Box className="flex flex-col justify-start mt-28 p-0 ">
+          <Box className="ml-0 flex flex-col p-0 pr-20 sticky top-28">
             <Avatar
               src={userAvatar}
               alt="User Avatar"
@@ -33,14 +32,17 @@ function Profile({ data }) {
             <Typography className="text-gray-600 font-mono" variant="h6">
               {userLoginName}
             </Typography>
-            <Typography className="font-mono" variant="h5">
-              Popular repositories
-            </Typography>
-            <ProfileCardList reposData={reposData} />
           </Box>
         </Box>
-      </Container>
-    </StyledEngineProvider>
+        <Box className="mt-28">
+          <Typography className="font-mono" variant="h5">
+            Popular repositories
+          </Typography>
+
+          <ProfileCardList reposData={reposData} />
+        </Box>
+      </Box>
+    </Container>
   );
 }
 
@@ -80,8 +82,6 @@ export async function getServerSideProps(context) {
       )
       .catch((errors) => console.log(errors));
   }
-
-  const reposResponse = await axios;
 
   return {
     props: {

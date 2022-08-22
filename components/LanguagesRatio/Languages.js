@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { LanguageRatio } from "./LanguageRatio";
 
-const Languages = ({ repo }) => {
+const Languages = ({ repo, mode }) => {
   const [data, setData] = useState([]);
 
   const getLanguages = async () => {
@@ -27,6 +27,7 @@ const Languages = ({ repo }) => {
             language={entry}
             totalAmount={languagesSum}
             key={entry[0]}
+            mode={mode}
           />
         );
       })}

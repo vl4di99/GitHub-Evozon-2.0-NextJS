@@ -15,7 +15,7 @@ function Profile({ data }) {
   const reposData = data.reposData;
   const userAvatar = data.userData?.avatar_url;
   const userName = data.userData?.name;
-  const userLogin = data.userData?.login;
+  const userLoginName = data.userData?.login;
 
   return (
     <StyledEngineProvider injectFirst>
@@ -28,13 +28,13 @@ function Profile({ data }) {
               className="border-4 border-fuchsia-900 w-64 h-64 "
             />
             <Typography className="font-mono" variant="h5">
-              Popular repositories
-            </Typography>
-            <Typography className="font-mono" variant="h5">
               {userName}
             </Typography>
             <Typography className="text-gray-600 font-mono" variant="h6">
-              {userLogin}
+              {userLoginName}
+            </Typography>
+            <Typography className="font-mono" variant="h5">
+              Popular repositories
             </Typography>
             <ProfileCardList reposData={reposData} />
           </Box>

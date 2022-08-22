@@ -8,7 +8,6 @@ import { useRecoilValue } from "recoil";
 import { gitUser } from "../../atoms/repository";
 
 export const ProfileCard = ({ repo }) => {
-  const userURL = useRecoilValue(gitUser);
   const repoName = repo.name;
   const repoDescription = repo.description;
   const repoPrivate = repo.private;
@@ -35,7 +34,7 @@ export const ProfileCard = ({ repo }) => {
           {repoDescription}
         </Typography>
 
-        <Languages repo={repoName} />
+        <Languages repo={repo} />
       </CardContent>
       <CardActions></CardActions>
     </Card>

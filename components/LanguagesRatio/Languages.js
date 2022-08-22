@@ -4,7 +4,6 @@ import { LanguageRatio } from "./LanguageRatio";
 
 const Languages = ({ repo }) => {
   const [data, setData] = useState([]);
-  let languagesSum = 0;
 
   const getLanguages = async () => {
     await axios.get(repo.languages_url).then((res) => setData(res.data));
@@ -12,14 +11,16 @@ const Languages = ({ repo }) => {
 
   useEffect(() => {
     getLanguages();
-  }, []);
+  }, [repo]);
 
-  Object.values(data).map((value) => {
-    languagesSum += value;
-  });
+  const initialValue = 0;
+  const languagesSum = Object.values(data).reduce(
+    (previousValue, currentValue) => previousValue + currentValue,
+    initialValue
+  );
 
   return (
-    <div className="languages-div flex space-x-2 px-4  ">
+    <div className="languages-div flex space-x-2 px-4 self-center">
       {Object.entries(data).map((entry) => {
         return (
           <LanguageRatio

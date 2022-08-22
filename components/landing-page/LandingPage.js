@@ -26,7 +26,7 @@ function LandingPage() {
   const enteredUsername = useRef();
 
   const router = useRouter();
-  const header = checkHeaders(session);
+  const header = checkHeaders();
 
   const getUserData = async (userUrl, userName) => {
     await axios({

@@ -2,7 +2,7 @@ import { atom } from "recoil";
 
 export const repoName = atom({
   key: "repositoryName",
-  default: "evozon-summer-2022-internship",
+  default: null,
 });
 
 export const gitUser = atom({

@@ -1,6 +1,5 @@
 import * as React from "react";
 import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
@@ -10,10 +9,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 export default function CustomizedSnackbars({ userExist }) {
   const [open, setOpen] = React.useState(true);
-
-  //   const handleKeyEnter = () => {
-  //     setOpen(true);
-  //   };
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -25,9 +20,6 @@ export default function CustomizedSnackbars({ userExist }) {
 
   return (
     <Stack spacing={2} sx={{ width: "30%" }}>
-      {/* <Button variant="outlined" onMouseEnter={handleMouseEnter}>
-        Open success snackbar
-      </Button> */}
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
         <Alert
           onClose={handleClose}
@@ -37,11 +29,6 @@ export default function CustomizedSnackbars({ userExist }) {
           {userExist ? "User found!" : "User not found, try again."}
         </Alert>
       </Snackbar>
-
-      {/* <Alert severity="error">This is an error message!</Alert>
-      <Alert severity="warning">This is a warning message!</Alert>
-      <Alert severity="info">This is an information message!</Alert>
-      <Alert severity="success">This is a success message!</Alert> */}
     </Stack>
   );
 }

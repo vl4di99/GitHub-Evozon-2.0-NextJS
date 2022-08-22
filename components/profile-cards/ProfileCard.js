@@ -35,7 +35,7 @@ export const ProfileCard = ({ repo }) => {
           {repoDescription}
         </Typography>
 
-        <Languages repo={repoName} />
+        <Languages repo={repo} />
       </CardContent>
       <CardActions></CardActions>
     </Card>

@@ -2,7 +2,9 @@ import * as React from "react";
 import axios from "axios";
 
 import { getSession, useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+
+import { useState } from "react";
+
 import { useRecoilState } from "recoil";
 import { gitUser, limitAPI } from "../../atoms/repository";
 import UserProfile from "../../components/Premium/UserProfile";
@@ -44,25 +46,27 @@ function Repos({ url, data }) {
           borderRadius: 1,
           p: 3,
         }}
-      >
-        <div className="flex self-end items-center ">
-          <p>{theme.palette.mode} mode</p>
-          <IconButton
-            sx={{ ml: 1 }}
-            onClick={colorMode.toggleColorMode}
-            color="inherit"
-          >
-            {theme.palette.mode === "dark" ? (
-              <Brightness7Icon />
-            ) : (
-              <Brightness4Icon />
-            )}
-          </IconButton>
-        </div>
 
-        <Container sx={{ minHeight: "100vh" }}>
+        className="p-0"
+      >
+        <Container sx={{ minHeight: "100vh" }} className="p-0" maxWidth="xl">
           {session && <UserProfile />}
-          <Container sx={{ minHeight: "100vh" }}>
+          <div className="flex items-center justify-end">
+            <p>{theme.palette.mode} mode</p>
+            <IconButton
+              sx={{ ml: 1 }}
+              onClick={colorMode.toggleColorMode}
+              color="inherit"
+            >
+              {theme.palette.mode === "dark" ? (
+                <Brightness7Icon />
+              ) : (
+                <Brightness4Icon />
+              )}
+            </IconButton>
+          </div>
+          <Container sx={{ minHeight: "100vh" }} className="p-0 ">
+            {" "}
             <h1 className="text-4xl pt-8 pb-4">{url}'s repos</h1>
             <hr className="border-2 border-fuchsia-700 rounded-md"></hr>
 
@@ -98,16 +102,6 @@ export default function ToggleColorMode({ url, data }) {
       createTheme({
         palette: {
           mode,
-        },
-        typography: {
-          // fontSize: 20,
-        },
-        components: {
-          MuiButtonBase: {
-            defaultProps: {
-              // disableRipple: true,
-            },
-          },
         },
       }),
     [mode]

@@ -1,8 +1,6 @@
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { axiosHeaders } from "../../atoms/repository";
 import { LanguageRatio } from "./LanguageRatio";
 
 const Languages = ({ repo, mode }) => {

@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 import { axiosHeaders } from "../../atoms/repository";
 import { LanguageRatio } from "./LanguageRatio";
 
-const Languages = ({ repo }) => {
+const Languages = ({ repo, mode }) => {
   const [data, setData] = useState([]);
   const headersAx = useRecoilValue(axiosHeaders);
 
@@ -37,6 +37,7 @@ const Languages = ({ repo }) => {
             language={entry}
             totalAmount={languagesSum}
             key={entry[0]}
+            mode={mode}
           />
         );
       })}

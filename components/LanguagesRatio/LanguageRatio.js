@@ -2,7 +2,7 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { Typography } from "@mui/material";
 import "react-circular-progressbar/dist/styles.css";
 
-export const LanguageRatio = ({ language, totalAmount }) => {
+export const LanguageRatio = ({ language, totalAmount, mode }) => {
   const [languageName, languageAmount] = language;
 
   const calculatePercent = () => {
@@ -21,7 +21,12 @@ export const LanguageRatio = ({ language, totalAmount }) => {
         return "#264BDD";
     }
   }
-
+  let languageColor = "#4a4e69";
+  let percentColor = "black";
+  if (mode == "dark") {
+    languageColor = "#9a8c98";
+    percentColor = "#A0A3BB";
+  }
   return (
     <div className="flex flex-col w-16 items-center">
       <div className="w-12">
@@ -30,12 +35,14 @@ export const LanguageRatio = ({ language, totalAmount }) => {
           value={languagePercent}
           text={`${languagePercent}%`}
           styles={buildStyles({
-            textColor: "#000",
+
+            textColor: percentColor,
+
             pathColor: getColor(),
           })}
         />
       </div>
-      <Typography color="#6c757d" gutterBottom>
+      <Typography color={languageColor} gutterBottom>
         {languageName}
       </Typography>
     </div>

@@ -62,14 +62,15 @@ function Profile({ data }) {
 export default Profile;
 
 export async function getServerSideProps(context) {
-  const session = await getSession(context);
+  const sessionContext = await getSession(context);
+  console.log(sessionContext);
   const userName = context.params.username;
   let userData = {};
   let reposData = {};
   let headersAx = {};
 
-  if (session) {
-    headersAx = { Authorization: `Bearer ${session.accessToken}` };
+  if (sessionContext) {
+    headersAx = { Authorization: `Bearer ${sessionContext.accessToken}` };
 
     const userResponse = await axios
       .all([
@@ -98,7 +99,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      session,
+      sessionContext,
       headersAx,
       userName,
       data: { userData, reposData },

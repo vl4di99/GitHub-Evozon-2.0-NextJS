@@ -1,24 +1,19 @@
 import axios from "axios";
 import UserProfile from "../../components/Premium/UserProfile";
 import RepositoryInfo from "../../components/Premium/RepositoryInfo";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { repoInfo, axiosHeaders } from "../../atoms/repository";
 import { getSession } from "next-auth/react";
-import UserProfileWithColorMode from "../../components/Premium/UserProfile";
 
 function RepositoryName({ url, resData, resContent, resCommits }) {
   return (
     <div className="flex flex-col">
-      <UserProfileWithColorMode>
-        <RepositoryInfo
-          avatar={resData?.owner?.avatar_url}
-          name={resData?.owner?.login}
-          content={resContent}
-          commits={resCommits}
-        />
-      </UserProfileWithColorMode>
+      <UserProfile />
+      <RepositoryInfo
+        avatar={resData?.owner?.avatar_url}
+        name={resData?.owner?.login}
+        repo={resData}
+        content={resContent}
+        commits={resCommits}
+      />
     </div>
   );
 }

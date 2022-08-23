@@ -48,7 +48,7 @@ function Repos({ url, data }) {
         }}
         className="p-0"
       >
-        <Container sx={{ minHeight: "100vh" }} className="p-0" maxWidth="xl">
+        <Container sx={{ minHeight: "100vh" }} className="p-0 min-w-full">
           {session && <UserProfile />}
           <div className="flex items-center justify-end">
             <p>{theme.palette.mode} mode</p>

@@ -8,8 +8,8 @@ import { Avatar, Box, Typography } from "@mui/material";
 import PlaceIcon from "@mui/icons-material/Place";
 import { Container } from "@mui/system";
 
-import { ProfileCardList } from "../../components/profile-cards/ProfileCardList";
-import UserProfile from "../../components/Premium/UserProfile";
+import { ProfileCardList } from "../components/profile-cards/ProfileCardList";
+import UserProfile from "../components/Premium/UserProfile";
 
 function Profile({ data }) {
   const userData = data.userData;
@@ -111,7 +111,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      sessionContext,
+      session,
       headersAx,
       userName,
       data: { userData, reposData },

@@ -13,15 +13,14 @@ import {
 import HistoryIcon from "@mui/icons-material/History";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Container } from "@mui/system";
-import axios from "axios";
+
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { axiosHeaders, repoInfo } from "../../atoms/repository";
+import { repoInfo } from "../../atoms/repository";
 import Languages from "../LanguagesRatio/Languages";
 import RepoData from "./RepoData";
 
-function RepositoryInfo({ avatar, name, content, commits }) {
-  const repo = useRecoilValue(repoInfo);
+function RepositoryInfo({ avatar, name, content, commits, repo }) {
   const [, setRepoCommits] = useState([]);
   const currentDate = new Date();
   const commitDate = new Date(commits[0]?.commit.committer.date);

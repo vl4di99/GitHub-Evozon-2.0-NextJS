@@ -14,7 +14,7 @@ import Container from "@mui/material/Container";
 
 function Repos({ url, data }) {
   const [filterBy, setFilterBy] = useState("");
-  const [userURL, setUserURL] = useRecoilState(gitUser);
+  const [, setUserURL] = useRecoilState(gitUser);
   setUserURL(url);
 
   const handleChange = (event) => {

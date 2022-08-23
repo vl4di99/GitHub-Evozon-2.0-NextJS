@@ -36,7 +36,7 @@ function UserProfile() {
   };
 
   return (
-    <div className="flex flex-row items-center justify-between p-3 bg-[#24292f] pl-5 pr-5">
+    <div className="flex flex-row items-center justify-between p-3 bg-[#24292f] pl-5 pr-5 ">
       <div className="flex flex-row justify-center items-center">
         <Link href="/">
           <Avatar

@@ -1,13 +1,15 @@
-import React from "react";
+import React, { Fragment } from "react";
 
-import { getSession, useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 
 import axios from "axios";
 
 import { Avatar, Box, Typography } from "@mui/material";
 import PlaceIcon from "@mui/icons-material/Place";
 import { Container } from "@mui/system";
-import { ProfileCardList } from "../components/profile-cards/ProfileCardList";
+
+import { ProfileCardList } from "../../components/profile-cards/ProfileCardList";
+import UserProfile from "../../components/Premium/UserProfile";
 
 function Profile({ data }) {
   const userData = data.userData;
@@ -20,42 +22,45 @@ function Profile({ data }) {
   const userFollowing = userData?.following;
 
   return (
-    <Container className="w-screen h-screen">
-      <Box className="flex pb-4 flex-wrap sm:flex-nowrap">
-        <Box className="flex flex-col justify-start mt-28 p-0 ">
-          <Box className="ml-0 flex flex-col p-0 pr-20 sticky top-28">
-            <Avatar
-              src={userAvatar}
-              alt="User Avatar"
-              className="border-4 border-fuchsia-900 w-64 h-64 "
-            />
-            <Typography className="font-mono" variant="h5">
-              {userName}
+    <Fragment>
+      <UserProfile className="fixed top-0 right-0 w-full " />
+      <Container className="w-screen h-screen">
+        <Box className="flex pb-4 flex-wrap sm:flex-nowrap">
+          <Box className="flex flex-col justify-start mt-28 p-0 ">
+            <Box className="ml-0 flex flex-col p-0 pr-20 sticky top-28">
+              <Avatar
+                src={userAvatar}
+                alt="User Avatar"
+                className="border-4 border-fuchsia-900 w-64 h-64 "
+              />
+              <Typography className="font-mono" variant="h5">
+                {userName}
+              </Typography>
+              <Typography className="text-gray-600 font-mono" variant="h6">
+                {userLoginName}
+              </Typography>
+              <Typography className="text-gray-600 font-mono mt-4" variant="h7">
+                <PlaceIcon className="w-4 h-5" />
+                {userLocation}
+              </Typography>
+              <Typography className="text-gray-600 font-mono text-sm pl-1">
+                {userFollowers == 1
+                  ? `${userFollowers} follower`
+                  : `${userFollowers} followers`}{" "}
+                | {`${userFollowing} following`}
+              </Typography>
+            </Box>
+          </Box>
+          <Box className="mt-28">
+            <Typography className="font-mono mb-2" variant="h5">
+              Popular repositories
             </Typography>
-            <Typography className="text-gray-600 font-mono" variant="h6">
-              {userLoginName}
-            </Typography>
-            <Typography className="text-gray-600 font-mono mt-4" variant="h7">
-              <PlaceIcon className="w-4 h-5" />
-              {userLocation}
-            </Typography>
-            <Typography className="text-gray-600 font-mono text-sm pl-1">
-              {userFollowers == 1
-                ? `${userFollowers} follower`
-                : `${userFollowers} followers`}{" "}
-              | {`${userFollowing} following`}
-            </Typography>
+
+            <ProfileCardList reposData={reposData} />
           </Box>
         </Box>
-        <Box className="mt-28">
-          <Typography className="font-mono mb-2" variant="h5">
-            Popular repositories
-          </Typography>
-
-          <ProfileCardList reposData={reposData} />
-        </Box>
-      </Box>
-    </Container>
+      </Container>
+    </Fragment>
   );
 }
 
@@ -63,6 +68,7 @@ export default Profile;
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
+
   let userData = {};
   let reposData = {};
   let headersAx = {};
@@ -105,7 +111,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      session,
+      sessionContext,
       headersAx,
       userName,
       data: { userData, reposData },

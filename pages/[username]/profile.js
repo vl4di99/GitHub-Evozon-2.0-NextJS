@@ -6,7 +6,7 @@ import axios from "axios";
 
 import { Avatar, Box, Typography } from "@mui/material";
 import PlaceIcon from "@mui/icons-material/Place";
-import { Container } from "@mui/system";
+import { Container, StyledEngineProvider } from "@mui/system";
 
 import { ProfileCardList } from "../../components/profile-cards/ProfileCardList";
 import UserProfile from "../../components/Premium/UserProfile";
@@ -23,7 +23,9 @@ function Profile({ data }) {
 
   return (
     <Fragment>
-      <UserProfile className="fixed top-0 right-0 w-full " />
+      <Box className="fixed top-0 w-full z-10">
+        <UserProfile />
+      </Box>
       <Container className="w-screen h-screen">
         <Box className="flex pb-4 flex-wrap sm:flex-nowrap">
           <Box className="flex flex-col justify-start mt-28 p-0 ">

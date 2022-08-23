@@ -15,6 +15,7 @@ export const Repo = ({ repo, theme }) => {
   const clickHandler = () => {
     router.push(`/${userURL}/${repo.name}`);
   };
+  
   const mode = theme.palette.mode;
   let color = indigo[50];
   if (mode === "dark") {
@@ -38,7 +39,7 @@ export const Repo = ({ repo, theme }) => {
       </CardContent>
       <CardActions>
         <Button size="small" onClick={clickHandler}>
-          details
+          More Details...
         </Button>
       </CardActions>
     </Card>

@@ -15,19 +15,14 @@ import { Container } from "@mui/system";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import {
-  axiosHeaders,
-  repoContent,
-  repoInfo,
-  repoName,
-} from "../../atoms/repository";
+import { axiosHeaders, repoInfo } from "../../atoms/repository";
 import Languages from "../LanguagesRatio/Languages";
 import RepoData from "./RepoData";
 
 function RepositoryInfo({ avatar, curUrl, name }) {
   const repo = useRecoilValue(repoInfo);
   const [repoC, setRepoC] = useState([]);
-  const [repoCommits, setRepoCommits] = useState([]);
+  const [, setRepoCommits] = useState([]);
   const headersAx = useRecoilValue(axiosHeaders);
 
   const getRepoContents = async () => {

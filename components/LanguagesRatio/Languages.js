@@ -1,12 +1,22 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { axiosHeaders } from "../../atoms/repository";
 import { LanguageRatio } from "./LanguageRatio";
 
 const Languages = ({ repo, mode }) => {
   const [data, setData] = useState([]);
+  const headersAx = useRecoilValue(axiosHeaders);
 
   const getLanguages = async () => {
-    await axios.get(repo.languages_url).then((res) => setData(res.data));
+    await axios
+      .get({
+        method: "get",
+        url: repo.languages_url,
+        headers: headersAx,
+      })
+      .then((res) => setData(res.data))
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {

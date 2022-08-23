@@ -30,8 +30,5 @@ export default (req, res) =>
         session.username = token.username;
         return session;
       },
-      async redirect(url, baseUrl) {
-        return "/";
-      },
     },
   });

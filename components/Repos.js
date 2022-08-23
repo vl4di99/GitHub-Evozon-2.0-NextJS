@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { gitUser } from "../atoms/repository";
-import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import * as React from "react";
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 import Box from "@mui/material/Box";
@@ -11,6 +11,8 @@ import { getSession } from "next-auth/react";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import Container from "@mui/material/Container";
+import { TextField } from "@mui/material";
+import { ReposList } from "./ReposList";
 
 function Repos({ url, data }) {
   const [filterBy, setFilterBy] = useState("");
@@ -54,7 +56,7 @@ function Repos({ url, data }) {
       </div>
       <Container sx={{ minHeight: "100vh" }}>
         <Container sx={{ minHeight: "100vh" }}>
-          <h1 className="text-4xl pt-8 pb-4">{url}'s repos</h1>
+          <h1 className="text-4xl pt-8 pb-4">{url}&apos;s repos</h1>
           <hr className="border-2 border-fuchsia-700 rounded-md"></hr>
           <TextField
             id="demo-helper-text-misaligned-no-helper"

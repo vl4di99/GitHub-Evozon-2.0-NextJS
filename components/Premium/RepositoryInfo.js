@@ -2,11 +2,8 @@ import {
   Avatar,
   Box,
   Divider,
-  List,
   ListItem,
   ListItemButton,
-  ListItemIcon,
-  ListItemText,
   Paper,
   Typography,
 } from "@mui/material";

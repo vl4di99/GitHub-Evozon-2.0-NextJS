@@ -8,13 +8,11 @@ import FolderIcon from "@mui/icons-material/Folder";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 
 export const DirectoryContent = ({ dirContent }) => {
-  console.log(dirContent);
   return (
     <div>
       {dirContent.map((element) => {
-        console.log(element);
         return (
-          <ListItem disablePadding>
+          <ListItem disablePadding key={element.sha}>
             <ListItemButton sx={{ p: 1 }}>
               <ListItemIcon sx={{ color: "inherit" }}>
                 {element.type == "dir" && <FolderIcon color="secondary" />}

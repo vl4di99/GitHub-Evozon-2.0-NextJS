@@ -66,7 +66,7 @@ function Repos({ url, data }) {
           </div>
           <Container sx={{ minHeight: "100vh" }} className="p-0 ">
             {" "}
-            <h1 className="text-4xl pt-8 pb-4">{url}'s repos</h1>
+            <h1 className="text-4xl pt-8 pb-4">{url}&rsquo;s repos</h1>
             <hr className="border-2 border-fuchsia-700 rounded-md"></hr>
             <TextField
               id="demo-helper-text-misaligned-no-helper"

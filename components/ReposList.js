@@ -6,7 +6,6 @@ export const ReposList = ({ filterBy, data, theme }) => {
   const [reposToShow, setReposToShow] = useState([]);
 
   useEffect(() => {
-    console.log(data);
     if (initialData) {
       const newArr = initialData.filter((repo) =>
         repo.name.toLowerCase().includes(filterBy.toLowerCase())

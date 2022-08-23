@@ -19,6 +19,7 @@ function successLogin() {
     }, 1000);
     if (seconds === 0) {
       clearInterval();
+      setHeader({ Authorization: `Bearer ${session?.accessToken}` });
       router.push("/");
     }
   }, [seconds]);

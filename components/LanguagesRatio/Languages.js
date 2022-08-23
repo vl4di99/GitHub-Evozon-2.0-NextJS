@@ -1,27 +1,27 @@
 import axios from "axios";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { axiosHeaders } from "../../atoms/repository";
 import { LanguageRatio } from "./LanguageRatio";
 
 const Languages = ({ repo, mode }) => {
+  const { data: session } = useSession();
   const [data, setData] = useState([]);
-  const headersAx = useRecoilValue(axiosHeaders);
 
   const getLanguages = async () => {
-    await axios
-      .get({
-        method: "get",
-        url: repo.languages_url,
-        headers: headersAx,
-      })
+    await axios({
+      method: "get",
+      url: repo.languages_url,
+      headers: { Authorization: `Bearer ${session?.accessToken}` },
+    })
       .then((res) => setData(res.data))
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
     getLanguages();
-  }, [repo]);
+  }, [session]);
 
   const initialValue = 0;
   const languagesSum = Object.values(data).reduce(

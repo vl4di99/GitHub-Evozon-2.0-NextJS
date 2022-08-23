@@ -15,8 +15,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import { DirectoryContent } from "../DirectoryContent";
 
 import { useState } from "react";
-import { LocalConvenienceStoreOutlined } from "@mui/icons-material";
-import { DirectoryContet } from "../DirectoryContent";
 
 const style = {
   position: "absolute",
@@ -30,7 +28,7 @@ const style = {
   p: 4,
 };
 
-function RepoData({ name, html_url, type, element }) {
+function RepoData({ name, type, element }) {
   console.log(element);
   const [open, setOpen] = useState(false);
 

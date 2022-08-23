@@ -101,6 +101,7 @@ function RepositoryInfo({ avatar, curUrl, name }) {
                       html_url={element.html_url}
                       type={element.type}
                       key={element.sha}
+                      element={element}
                     />
                   ))}
                   {repo ? <Languages repo={repo} className="flex" /> : null}

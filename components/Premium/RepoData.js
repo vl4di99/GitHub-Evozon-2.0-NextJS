@@ -6,8 +6,10 @@ import {
 } from "@mui/material";
 import FolderIcon from "@mui/icons-material/Folder";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
+import axios from "axios";
+import { useState } from "react";
 
-function RepoData({ name, html_url, type }) {
+function RepoData({ name, html_url, type, element }) {
   let dirType;
   let fileType;
 
@@ -16,9 +18,18 @@ function RepoData({ name, html_url, type }) {
   } else if (type == "file") {
     fileType = type;
   }
+
+  const [code, setCode] = useState({});
+
+  const handleClick = async () => {
+    console.log(element.type);
+    // const res = await axios.get(element.download_url);
+    // console.log(res);
+  };
+
   return (
     <ListItem disablePadding>
-      <ListItemButton sx={{ p: 1 }} href={html_url}>
+      <ListItemButton sx={{ p: 1 }} onClick={handleClick}>
         <ListItemIcon sx={{ color: "inherit" }}>
           {dirType && <FolderIcon color="secondary" />}
           {fileType && <InsertDriveFileIcon />}

@@ -1,7 +1,12 @@
-import { Avatar, Button, Menu, MenuItem, Typography } from "@mui/material";
-import { signOut, useSession } from "next-auth/react";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import { signOut, useSession } from "next-auth/react";
 
+import { useRecoilValue } from "recoil";
+
+import { gitUser } from "./../../atoms/repository";
+
+import { Avatar, Button, Menu, MenuItem, Typography } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Link from "next/link";
 
@@ -9,12 +14,17 @@ function UserProfile() {
   const { data: session } = useSession();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const router = useRouter();
+  const userURL = useRecoilValue(gitUser);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handleProfile = () => {
+    router.push(`/${userURL}/profile`);
   };
 
   const handleSignOut = () => {
@@ -60,7 +70,7 @@ function UserProfile() {
               Signed in as <b>{session?.name}</b>
             </Typography>
           </MenuItem>
-          <MenuItem onClick={handleClose}>My account</MenuItem>
+          <MenuItem onClick={handleProfile}>Your profile</MenuItem>
           <MenuItem onClick={handleSignOut}>
             Logout <LogoutIcon className="ml-5" />
           </MenuItem>

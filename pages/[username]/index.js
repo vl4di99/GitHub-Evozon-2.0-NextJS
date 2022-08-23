@@ -1,11 +1,13 @@
 import * as React from "react";
 import axios from "axios";
+
+import { getSession, useSession } from "next-auth/react";
+import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { gitUser, limitAPI } from "../../atoms/repository";
+import UserProfile from "../../components/Premium/UserProfile";
 import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
-import { useState } from "react";
-import { getSession } from "next-auth/react";
-import { useRecoilState } from "recoil";
-import { gitUser } from "../../atoms/repository";
 import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
@@ -16,6 +18,7 @@ import { ReposList } from "../../components/ReposList";
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
 function Repos({ url, data }) {
+  const { data: session } = useSession();
   const [filterBy, setFilterBy] = useState("");
   const [userURL, setUserURL] = useRecoilState(gitUser);
   setUserURL(url);
@@ -28,50 +31,54 @@ function Repos({ url, data }) {
   const colorMode = React.useContext(ColorModeContext);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        width: "100%",
-        alignItems: "center",
-        justifyContent: "center",
-        bgcolor: "background.default",
-        color: "text.primary",
-        borderRadius: 1,
-        p: 3,
-      }}
-    >
-      <div className="flex self-end items-center ">
-        <p>{theme.palette.mode} mode</p>
-        <IconButton
-          sx={{ ml: 1 }}
-          onClick={colorMode.toggleColorMode}
-          color="inherit"
-        >
-          {theme.palette.mode === "dark" ? (
-            <Brightness7Icon />
-          ) : (
-            <Brightness4Icon />
-          )}
-        </IconButton>
-      </div>
-
-      <Container sx={{ minHeight: "100vh" }}>
-        <Container sx={{ minHeight: "100vh" }}>
-          <h1 className="text-4xl pt-8 pb-4">{url}'s repos</h1>
-          <hr className="border-2 border-fuchsia-700 rounded-md"></hr>
-          <TextField
-            id="demo-helper-text-misaligned-no-helper"
-            label="Filter through the repos"
-            className="my-4 w-full lg:w-3/6"
-            name="message"
-            onChange={handleChange}
-            color="secondary"
-          />
-          <ReposList filterBy={filterBy} data={data} theme={theme} />
+    data && (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+          alignItems: "center",
+          justifyContent: "center",
+          bgcolor: "background.default",
+          color: "text.primary",
+          borderRadius: 1,
+          p: 3,
+        }}
+        className="p-0"
+      >
+        <Container sx={{ minHeight: "100vh" }} className="p-0" maxWidth="xl">
+          {session && <UserProfile />}
+          <div className="flex items-center justify-end">
+            <p>{theme.palette.mode} mode</p>
+            <IconButton
+              sx={{ ml: 1 }}
+              onClick={colorMode.toggleColorMode}
+              color="inherit"
+            >
+              {theme.palette.mode === "dark" ? (
+                <Brightness7Icon />
+              ) : (
+                <Brightness4Icon />
+              )}
+            </IconButton>
+          </div>
+          <Container sx={{ minHeight: "100vh" }} className="p-0 ">
+            {" "}
+            <h1 className="text-4xl pt-8 pb-4">{url}'s repos</h1>
+            <hr className="border-2 border-fuchsia-700 rounded-md"></hr>
+            <TextField
+              id="demo-helper-text-misaligned-no-helper"
+              label="Filter through the repos"
+              className="my-4 w-full lg:w-3/6"
+              name="message"
+              onChange={handleChange}
+              color="secondary"
+            />
+            <ReposList filterBy={filterBy} data={data} theme={theme} />
+          </Container>
         </Container>
-      </Container>
-    </Box>
+      </Box>
+    )
   );
 }
 
@@ -108,8 +115,8 @@ export default function ToggleColorMode({ url, data }) {
 export async function getServerSideProps(context) {
   const session = await getSession(context);
   const url = context.params.username;
-  let headersAx = {};
   let resData = {};
+  let headersAx = {};
 
   if (session) {
     headersAx = { Authorization: `Bearer ${session.accessToken}` };
@@ -124,8 +131,6 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      session,
-      headersAx,
       url,
       data: resData,
     },

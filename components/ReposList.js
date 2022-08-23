@@ -3,13 +3,15 @@ import { Repo } from "./Repo";
 
 export const ReposList = ({ filterBy, data, theme }) => {
   const initialData = data;
-  const [reposToShow, setReposToShow] = useState(data);
+  const [reposToShow, setReposToShow] = useState([]);
 
   useEffect(() => {
-    const newArr = initialData.filter((repo) =>
-      repo.name.toLowerCase().includes(filterBy.toLowerCase())
-    );
-    setReposToShow(newArr);
+    if (initialData) {
+      const newArr = initialData.filter((repo) =>
+        repo.name.toLowerCase().includes(filterBy.toLowerCase())
+      );
+      setReposToShow(newArr);
+    }
   }, [filterBy]);
 
   return (

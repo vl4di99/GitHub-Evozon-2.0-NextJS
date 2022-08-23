@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 
 import { useRouter } from "next/router";
@@ -14,26 +14,43 @@ import LoginIcon from "@mui/icons-material/Login";
 
 import githubIcon from "../../images/github-icon.png";
 import githubBackground from "../../images/github-background.jpg";
+import UserProfile from "../Premium/UserProfile";
+import { useSession } from "next-auth/react";
+import { useRecoilValue } from "recoil";
+import { axiosHeaders } from "../../atoms/repository";
 
 function LandingPage() {
+  const { data: session } = useSession();
   const [functionEntered, setFunctionEntered] = useState(false);
   const [userExist, setUserExist] = useState(null);
   const [userDataResponse, setUserDataResponse] = useState([]);
   const enteredUsername = useRef();
+  const headersAx = useRecoilValue(axiosHeaders);
 
   const router = useRouter();
 
-  const getUserData = (userUrl, userName) => {
-    axios
-      .get(userUrl)
+  const getUserData = async (userUrl, userName) => {
+    await axios({
+      method: "get",
+      url: userUrl,
+      headers: headersAx,
+    })
       .then((response) => {
         setUserDataResponse(response.data);
         setUserExist(true);
         setFunctionEntered(true);
-        router.push(`/${userName}`);
+        setTimeout(function () {
+          if (session) {
+            router.push(`/${userName}`);
+          } else {
+            router.push(`/login`);
+          }
+        }, 500);
       })
       .catch(function (error) {
-        if (error.response) {
+        if (error.response.status === 403) {
+          router.push("limitReached");
+        } else if (error.response) {
           setUserDataResponse(error.response);
           setUserExist(false);
           setFunctionEntered(true);
@@ -56,6 +73,7 @@ function LandingPage() {
 
   return (
     <section className="relative flex h-screen items-center justify-center flex-col ">
+      {session && <UserProfile />}
       <Image
         src={githubBackground}
         alt="github background"

@@ -15,44 +15,16 @@ import { Container } from "@mui/system";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import {
-  axiosHeaders,
-  repoContent,
-  repoInfo,
-  repoName,
-} from "../../atoms/repository";
+import { axiosHeaders, repoInfo } from "../../atoms/repository";
 import Languages from "../LanguagesRatio/Languages";
 import RepoData from "./RepoData";
 
-function RepositoryInfo({ avatar, curUrl, name }) {
+function RepositoryInfo({ avatar, name, content, commits }) {
   const repo = useRecoilValue(repoInfo);
-  const [repoC, setRepoC] = useState([]);
-  const [repoCommits, setRepoCommits] = useState([]);
-  const headersAx = useRecoilValue(axiosHeaders);
-
-  const getRepoContents = async () => {
-    await axios({
-      method: "get",
-      url: `https://api.github.com/repos${curUrl}/contents`,
-      headers: headersAx,
-    }).then((res) => {
-      setRepoC(res.data);
-      getRepoCommits();
-    });
-  };
-
-  const getRepoCommits = async () => {
-    await axios({
-      method: "get",
-      url: `https://api.github.com/repos${curUrl}/commits`,
-      headers: headersAx,
-    }).then((res) => {
-      setRepoCommits(res.data);
-    });
-  };
+  const [, setRepoCommits] = useState([]);
 
   useEffect(() => {
-    getRepoContents();
+    setRepoCommits(commits);
   }, []);
 
   return (
@@ -95,7 +67,7 @@ function RepositoryInfo({ avatar, curUrl, name }) {
                     p: 2,
                   }}
                 >
-                  {repoC.map((element) => (
+                  {content?.map((element) => (
                     <RepoData
                       name={element.name}
                       html_url={element.html_url}

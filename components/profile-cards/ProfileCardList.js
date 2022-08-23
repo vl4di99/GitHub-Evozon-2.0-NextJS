@@ -1,7 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ProfileCard } from "./ProfileCard";
-
-import axios from "axios";
 
 import { Box } from "@mui/material";
 
@@ -24,8 +22,8 @@ export const ProfileCardList = ({ reposData }) => {
   return (
     <Box className="repos-container grid grid-cols-2 gap-4">
       {reposToShow.map((repo, index) => {
-        const firstSixRepos = 5;
-        if (index <= firstSixRepos) {
+        const nrOfReposDisplayed = 8;
+        if (index < nrOfReposDisplayed) {
           const mainLanguage = repo.language;
 
           return (

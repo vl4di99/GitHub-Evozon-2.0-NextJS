@@ -5,20 +5,23 @@ import { getSession, useSession } from "next-auth/react";
 import axios from "axios";
 
 import { Avatar, Box, Typography } from "@mui/material";
+import PlaceIcon from "@mui/icons-material/Place";
 import { Container } from "@mui/system";
 import { ProfileCardList } from "../../components/profile-cards/ProfileCardList";
 
 function Profile({ data }) {
-  const { data: session } = useSession();
   const userData = data.userData;
   const reposData = data.reposData;
-  const userAvatar = data.userData?.avatar_url;
-  const userName = data.userData?.name;
-  const userLoginName = data.userData?.login;
+  const userAvatar = userData?.avatar_url;
+  const userName = userData?.name;
+  const userLoginName = userData?.login;
+  const userLocation = userData?.location;
+  const userFollowers = userData?.followers;
+  const userFollowing = userData?.following;
 
   return (
     <Container className="w-screen h-screen">
-      <Box className="flex pb-4">
+      <Box className="flex pb-4 flex-wrap sm:flex-nowrap">
         <Box className="flex flex-col justify-start mt-28 p-0 ">
           <Box className="ml-0 flex flex-col p-0 pr-20 sticky top-28">
             <Avatar
@@ -31,6 +34,16 @@ function Profile({ data }) {
             </Typography>
             <Typography className="text-gray-600 font-mono" variant="h6">
               {userLoginName}
+            </Typography>
+            <Typography className="text-gray-600 font-mono mt-4" variant="h7">
+              <PlaceIcon className="w-4 h-5" />
+              {userLocation}
+            </Typography>
+            <Typography className="text-gray-600 font-mono text-sm pl-1">
+              {userFollowers == 1
+                ? `${userFollowers} follower`
+                : `${userFollowers} followers`}{" "}
+              | {`${userFollowing} following`}
             </Typography>
           </Box>
         </Box>

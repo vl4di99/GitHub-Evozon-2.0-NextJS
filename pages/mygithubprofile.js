@@ -7,7 +7,7 @@ import axios from "axios";
 import { Avatar, Box, Typography } from "@mui/material";
 import PlaceIcon from "@mui/icons-material/Place";
 import { Container } from "@mui/system";
-import { ProfileCardList } from "../../components/profile-cards/ProfileCardList";
+import { ProfileCardList } from "../components/profile-cards/ProfileCardList";
 
 function Profile({ data }) {
   const userData = data.userData;
@@ -63,13 +63,20 @@ export default Profile;
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-  const userName = context.params.username;
   let userData = {};
   let reposData = {};
   let headersAx = {};
+  let userName = "";
 
   if (session) {
     headersAx = { Authorization: `Bearer ${session.accessToken}` };
+    const gitUserName = await axios({
+      method: "get",
+      url: `https://api.github.com/user/${session.userId}`,
+      headers: headersAx,
+    });
+
+    userName = gitUserName.data.login;
 
     const userResponse = await axios
       .all([

@@ -18,7 +18,10 @@ export const ProfileCard = ({ repo, mainLanguage }) => {
       className=" border-0 bg-slate-100 drop-shadow-md min-w-md flex flex-col justify-between"
       variant="outlined"
     >
-      <Typography color="secondary" className="text-xl font-semibold p-2">
+      <Typography
+        color="secondary"
+        className="text-xl font-semibold p-2 break-words"
+      >
         {repoName}
       </Typography>
       <Typography

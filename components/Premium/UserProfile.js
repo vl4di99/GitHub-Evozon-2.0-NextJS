@@ -1,30 +1,37 @@
-import { useState } from "react";
-import { useRouter } from "next/router";
+import {
+  Avatar,
+  Button,
+  createTheme,
+  IconButton,
+  Menu,
+  MenuItem,
+  ThemeProvider,
+  Typography,
+} from "@mui/material";
 import { signOut, useSession } from "next-auth/react";
+import { createContext, useContext, useMemo, useState } from "react";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 
-import { useRecoilValue } from "recoil";
-
-import { gitUser } from "./../../atoms/repository";
-
-import { Avatar, Button, Menu, MenuItem, Typography } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Link from "next/link";
+import { useTheme } from "@emotion/react";
+
+const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
 function UserProfile() {
   const { data: session } = useSession();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const router = useRouter();
-  const userURL = useRecoilValue(gitUser);
+
+  const theme = useTheme();
+  const colorMode = useContext(ColorModeContext);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
-  };
-  const handleProfile = () => {
-    router.push(`/${userURL}/profile`);
   };
 
   const handleSignOut = () => {
@@ -41,6 +48,20 @@ function UserProfile() {
             className="hover: cursor-pointer"
           />
         </Link>
+      </div>
+      <div className="flex items-center ">
+        <p>{theme.palette.mode} mode</p>
+        <IconButton
+          sx={{ ml: 1 }}
+          onClick={colorMode.toggleColorMode}
+          color="inherit"
+        >
+          {theme.palette.mode === "dark" ? (
+            <Brightness7Icon />
+          ) : (
+            <Brightness4Icon />
+          )}
+        </IconButton>
       </div>
       <div className="flex flex-row justify-end items-center">
         <Button
@@ -70,7 +91,9 @@ function UserProfile() {
               Signed in as <b>{session?.name}</b>
             </Typography>
           </MenuItem>
-          <MenuItem onClick={handleProfile}>Your profile</MenuItem>
+          <MenuItem onClick={handleClose}>
+            <Link href="/mygithubprofile">My account</Link>
+          </MenuItem>
           <MenuItem onClick={handleSignOut}>
             Logout <LogoutIcon className="ml-5" />
           </MenuItem>
@@ -80,4 +103,45 @@ function UserProfile() {
   );
 }
 
-export default UserProfile;
+function UserProfileWithColorMode(props) {
+  const [mode, setMode] = useState("light");
+  const colorMode = useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+      },
+    }),
+    []
+  );
+
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+        },
+        typography: {
+          // fontSize: 20,
+        },
+        components: {
+          MuiButtonBase: {
+            defaultProps: {
+              // disableRipple: true,
+            },
+          },
+        },
+      }),
+    [mode]
+  );
+
+  return (
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <UserProfile />
+        {props.children}
+      </ThemeProvider>
+    </ColorModeContext.Provider>
+  );
+}
+
+export default UserProfileWithColorMode;

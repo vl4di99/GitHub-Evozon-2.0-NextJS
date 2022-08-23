@@ -6,17 +6,19 @@ import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { repoInfo, axiosHeaders } from "../../atoms/repository";
 import { getSession } from "next-auth/react";
+import UserProfileWithColorMode from "../../components/Premium/UserProfile";
 
 function RepositoryName({ url, resData, resContent, resCommits }) {
   return (
     <div className="flex flex-col">
-      <UserProfile />
-      <RepositoryInfo
-        avatar={resData?.owner?.avatar_url}
-        name={resData?.owner?.login}
-        content={resContent}
-        commits={resCommits}
-      />
+      <UserProfileWithColorMode>
+        <RepositoryInfo
+          avatar={resData?.owner?.avatar_url}
+          name={resData?.owner?.login}
+          content={resContent}
+          commits={resCommits}
+        />
+      </UserProfileWithColorMode>
     </div>
   );
 }
@@ -49,9 +51,16 @@ export async function getServerSideProps(context) {
       headers: { Authorization: `Bearer ${session.accessToken}` },
     });
 
-    resData = response.data;
-    resContent = responseContent.data;
-    resCommits = responseCommits.data;
+    await axios
+      .all([response, responseContent, responseCommits])
+      .then(
+        axios.spread((...responses) => {
+          resData = responses[0].data;
+          resContent = responses[1].data;
+          resCommits = responses[2].data;
+        })
+      )
+      .catch((error) => console.log(error));
   }
 
   return {

@@ -23,7 +23,9 @@ function Profile({ data }) {
 
   return (
     <Fragment>
-      <UserProfile className="fixed top-0 right-0 w-full " />
+      <Box className="fixed top-0 w-full z-10">
+        <UserProfile />
+      </Box>
       <Container className="w-screen h-screen">
         <Box className="flex pb-4 flex-wrap sm:flex-nowrap">
           <Box className="flex flex-col justify-start mt-28 p-0 ">

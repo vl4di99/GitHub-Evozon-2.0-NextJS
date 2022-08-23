@@ -6,7 +6,7 @@ import axios from "axios";
 
 import { Avatar, Box, Typography } from "@mui/material";
 import PlaceIcon from "@mui/icons-material/Place";
-import { Container, StyledEngineProvider } from "@mui/system";
+import { Container } from "@mui/system";
 
 import { ProfileCardList } from "../../components/profile-cards/ProfileCardList";
 import UserProfile from "../../components/Premium/UserProfile";

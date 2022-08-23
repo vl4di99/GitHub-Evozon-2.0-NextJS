@@ -67,15 +67,22 @@ function Profile({ data }) {
 export default Profile;
 
 export async function getServerSideProps(context) {
-  const sessionContext = await getSession(context);
-  console.log(sessionContext);
-  const userName = context.params.username;
+  const session = await getSession(context);
+
   let userData = {};
   let reposData = {};
   let headersAx = {};
+  let userName = "";
 
-  if (sessionContext) {
-    headersAx = { Authorization: `Bearer ${sessionContext.accessToken}` };
+  if (session) {
+    headersAx = { Authorization: `Bearer ${session.accessToken}` };
+    const gitUserName = await axios({
+      method: "get",
+      url: `https://api.github.com/user/${session.userId}`,
+      headers: headersAx,
+    });
+
+    userName = gitUserName.data.login;
 
     const userResponse = await axios
       .all([

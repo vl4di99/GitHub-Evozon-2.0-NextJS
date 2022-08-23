@@ -27,7 +27,7 @@ export default (req, res) =>
         session.name = token.name;
         session.email = token.email;
         session.picture = token.picture;
-        session.username = token.username;
+        session.userId = token.sub;
         return session;
       },
     },

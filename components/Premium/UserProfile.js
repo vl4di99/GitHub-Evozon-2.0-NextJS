@@ -24,9 +24,6 @@ function UserProfile() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
-  const theme = useTheme();
-  const colorMode = useContext(ColorModeContext);
-
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -103,45 +100,4 @@ function UserProfile() {
   );
 }
 
-function UserProfileWithColorMode(props) {
-  const [mode, setMode] = useState("light");
-  const colorMode = useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
-      },
-    }),
-    []
-  );
-
-  const theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-        },
-        typography: {
-          // fontSize: 20,
-        },
-        components: {
-          MuiButtonBase: {
-            defaultProps: {
-              // disableRipple: true,
-            },
-          },
-        },
-      }),
-    [mode]
-  );
-
-  return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        <UserProfile />
-        {props.children}
-      </ThemeProvider>
-    </ColorModeContext.Provider>
-  );
-}
-
-export default UserProfileWithColorMode;
+export default UserProfile;

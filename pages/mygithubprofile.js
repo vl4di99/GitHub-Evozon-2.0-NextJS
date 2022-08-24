@@ -69,7 +69,7 @@ function Profile({ data }) {
           bgcolor: "background.default",
           color: "text.primary",
           borderRadius: 1,
-          p: 3,
+          p: 0,
         }}
       >
         <Container className="w-screen min-h-screen">

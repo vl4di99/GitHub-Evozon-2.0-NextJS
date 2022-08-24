@@ -3,6 +3,7 @@ import { Typography, Box, Snackbar, Alert } from "@mui/material";
 import languageColors from "../../jsonData/languageColors.json";
 import { useEffect, useState } from "react";
 import { indigo } from "@mui/material/colors";
+import Button from "@mui/material/Button";
 
 export const ProfileCard = ({ repo, mainLanguage, theme }) => {
   const [languageColor, setLanguageColor] = useState();
@@ -70,7 +71,7 @@ export const ProfileCard = ({ repo, mainLanguage, theme }) => {
       >
         {repoDescription ? repoDescription : "No description"}
       </Typography>
-      <Box className="p-2">
+      <Box className="p-2 flex items-center">
         {mainLanguage ? (
           <Typography
             className="w-3 h-3 rounded-full inline-block mr-1"
@@ -88,22 +89,18 @@ export const ProfileCard = ({ repo, mainLanguage, theme }) => {
         >
           {mainLanguage ? mainLanguage : "No language used"}
         </Typography>
-      </Box>
-      <Box
-        className="border-2 border-amber-300 self-center min-w-fit m-1 rounded-2xl p-1 bg-orange-50 hover:bg-orange-200 hover:cursor-pointer"
-        onClick={() => navigator.clipboard.writeText(repo.clone_url)}
-      >
-        <Typography
-          className="rounded-full inline-block "
-          variant="h6"
+        <Button
+          size="small"
           onClick={() => {
             navigator.clipboard.writeText(repo.clone_url);
             handleClick();
           }}
+          className="ml-auto"
         >
-          Clone
-        </Typography>
+          <Typography className="text-lime-500">Clone</Typography>
+        </Button>
       </Box>
+
       <Snackbar
         open={open}
         autoHideDuration={6000}

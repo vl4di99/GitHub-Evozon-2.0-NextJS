@@ -103,7 +103,7 @@ export const ProfileCard = ({ repo, mainLanguage, theme }) => {
 
       <Snackbar
         open={open}
-        autoHideDuration={6000}
+        autoHideDuration={1500}
         onClose={handleClose}
         className="self-center"
       >

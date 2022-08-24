@@ -37,7 +37,7 @@ function RepositoryInfo({ avatar, name, content, commits, repo }) {
         />
         <Typography variant="h5">{name}</Typography>
 
-        <Box className="flex justify-center m-5 w-fit">
+        <Box className="flex justify-center m-5 w-8/12">
           <ThemeProvider
             theme={createTheme({
               palette: {
@@ -53,17 +53,14 @@ function RepositoryInfo({ avatar, name, content, commits, repo }) {
                   disablePadding
                   className="flex flex-row min-w-full items-center"
                 >
-                  <ListItemButton className="flex flex-row min-w-full justify-between cursor-default ">
+                  <ListItemButton className="flex flex-row min-w-fit justify-between cursor-default ">
                     <Box className="flex flex-row items-center justify-center">
                       <Avatar
                         src={commits[0]?.committer.avatar_url}
                         alt="Committer image"
                         className="w-7 h-7"
                       />
-                      <Typography
-                        variant="h7"
-                        className="hover:underline m-3 min-w-fit"
-                      >
+                      <Typography variant="h7" className="hover:underline m-3">
                         <b>{commits[0]?.committer.login}</b>
                       </Typography>
                       <Typography

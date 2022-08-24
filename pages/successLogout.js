@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import { useEffect, useState } from "react";
 
-function successLogout() {
+function SuccessLogout() {
   const [seconds, setSeconds] = useState(3);
   const router = useRouter();
 
@@ -27,4 +27,4 @@ function successLogout() {
   );
 }
 
-export default successLogout;
+export default SuccessLogout;

@@ -99,7 +99,7 @@ function RepoData({ name, type, element }) {
             {element.name}
           </Typography>
           {element.type === "file" ? (
-            !element.name.includes("package") ? (
+            !element.name.includes(".json") ? (
               element.name.includes(".png") ? (
                 <img
                   src={element.download_url}

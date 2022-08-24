@@ -1,10 +1,6 @@
 import axios from "axios";
 import UserProfile from "../../components/Premium/UserProfile";
 import RepositoryInfo from "../../components/Premium/RepositoryInfo";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { repoInfo, axiosHeaders } from "../../atoms/repository";
 import { getSession } from "next-auth/react";
 
 function RepositoryName({ url, resData, resContent, resCommits }) {
@@ -14,6 +10,7 @@ function RepositoryName({ url, resData, resContent, resCommits }) {
       <RepositoryInfo
         avatar={resData?.owner?.avatar_url}
         name={resData?.owner?.login}
+        repo={resData}
         content={resContent}
         commits={resCommits}
       />
@@ -49,9 +46,16 @@ export async function getServerSideProps(context) {
       headers: { Authorization: `Bearer ${session.accessToken}` },
     });
 
-    resData = response.data;
-    resContent = responseContent.data;
-    resCommits = responseCommits.data;
+    await axios
+      .all([response, responseContent, responseCommits])
+      .then(
+        axios.spread((...responses) => {
+          resData = responses[0].data;
+          resContent = responses[1].data;
+          resCommits = responses[2].data;
+        })
+      )
+      .catch((error) => console.log(error));
   }
 
   return {

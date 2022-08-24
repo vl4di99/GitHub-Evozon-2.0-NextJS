@@ -23,9 +23,6 @@ function UserProfile() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleProfile = () => {
-    router.push(`/${userURL}/profile`);
-  };
 
   const handleSignOut = () => {
     signOut({ callbackUrl: "/successLogout" });
@@ -70,7 +67,9 @@ function UserProfile() {
               Signed in as <b>{session?.name}</b>
             </Typography>
           </MenuItem>
-          <MenuItem onClick={handleProfile}>Your profile</MenuItem>
+          <Link href="/mygithubprofile">
+            <MenuItem>My GitHub profile</MenuItem>
+          </Link>
           <MenuItem onClick={handleSignOut}>
             Logout <LogoutIcon className="ml-5" />
           </MenuItem>

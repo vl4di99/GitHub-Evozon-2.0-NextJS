@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { axiosHeaders } from "../atoms/repository";
 
-function successLogin() {
+function SuccessLogin() {
   const [seconds, setSeconds] = useState(3);
   const { data: session } = useSession();
   const router = useRouter();
-  const [header, setHeader] = useRecoilState(axiosHeaders);
+  const [, setHeader] = useRecoilState(axiosHeaders);
   //setHeader({ Authorization: `Bearer ${session?.accessToken}` });
   //console.log(header);
 
@@ -34,4 +34,4 @@ function successLogin() {
   );
 }
 
-export default successLogin;
+export default SuccessLogin;

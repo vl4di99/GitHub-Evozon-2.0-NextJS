@@ -8,8 +8,8 @@ import { Avatar, Box, Typography } from "@mui/material";
 import PlaceIcon from "@mui/icons-material/Place";
 import { Container } from "@mui/system";
 
-import { ProfileCardList } from "../../components/profile-cards/ProfileCardList";
-import UserProfile from "../../components/Premium/UserProfile";
+import { ProfileCardList } from "../components/profile-cards/ProfileCardList";
+import UserProfile from "../components/Premium/UserProfile";
 
 function Profile({ data }) {
   const userData = data.userData;
@@ -23,7 +23,9 @@ function Profile({ data }) {
 
   return (
     <Fragment>
-      <UserProfile className="fixed top-0 right-0 w-full " />
+      <Box className="fixed top-0 w-full z-10">
+        <UserProfile />
+      </Box>
       <Container className="w-screen h-screen">
         <Box className="flex pb-4 flex-wrap sm:flex-nowrap">
           <Box className="flex flex-col justify-start mt-28 p-0 ">
@@ -67,15 +69,22 @@ function Profile({ data }) {
 export default Profile;
 
 export async function getServerSideProps(context) {
-  const sessionContext = await getSession(context);
-  console.log(sessionContext);
-  const userName = context.params.username;
+  const session = await getSession(context);
+
   let userData = {};
   let reposData = {};
   let headersAx = {};
+  let userName = "";
 
-  if (sessionContext) {
-    headersAx = { Authorization: `Bearer ${sessionContext.accessToken}` };
+  if (session) {
+    headersAx = { Authorization: `Bearer ${session.accessToken}` };
+    const gitUserName = await axios({
+      method: "get",
+      url: `https://api.github.com/user/${session.userId}`,
+      headers: headersAx,
+    });
+
+    userName = gitUserName.data.login;
 
     const userResponse = await axios
       .all([
@@ -104,7 +113,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      sessionContext,
+      session,
       headersAx,
       userName,
       data: { userData, reposData },

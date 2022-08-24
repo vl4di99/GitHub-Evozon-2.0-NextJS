@@ -33,8 +33,10 @@ function Profile({ data }) {
 
   const mode = theme.palette.mode;
   let textColor = "text-gray-600";
+  let toggleColor = "black";
   if (mode === "dark") {
     textColor = "#9a8c98";
+    toggleColor = "white";
   }
 
   return (
@@ -42,11 +44,13 @@ function Profile({ data }) {
       <Box className="fixed w-full z-10">
         <UserProfile />
         <div className="flex items-center justify-end">
-          <p>{theme.palette.mode} mode</p>
+          <Typography sx={{ color: toggleColor }}>
+            {theme.palette.mode} mode
+          </Typography>
+
           <IconButton
-            sx={{ ml: 1 }}
+            sx={{ ml: 1, color: toggleColor }}
             onClick={colorMode.toggleColorMode}
-            color="inherit"
           >
             {theme.palette.mode === "dark" ? (
               <Brightness7Icon />
@@ -61,7 +65,6 @@ function Profile({ data }) {
           display: "flex",
           flexDirection: "column",
           width: "100%",
-          // alignItems: "center",
           justifyContent: "center",
           bgcolor: "background.default",
           color: "text.primary",

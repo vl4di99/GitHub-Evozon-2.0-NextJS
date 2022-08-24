@@ -2,8 +2,9 @@ import Card from "@mui/material/Card";
 import { Typography, Box, Snackbar, Alert } from "@mui/material";
 import languageColors from "../../jsonData/languageColors.json";
 import { useEffect, useState } from "react";
+import { indigo } from "@mui/material/colors";
 
-export const ProfileCard = ({ repo, mainLanguage }) => {
+export const ProfileCard = ({ repo, mainLanguage, theme }) => {
   const [languageColor, setLanguageColor] = useState();
   const [open, setOpen] = useState(false);
   const repoName = repo.name;
@@ -26,9 +27,21 @@ export const ProfileCard = ({ repo, mainLanguage }) => {
     setLanguageColor(languageColors[mainLanguage]);
   }, []);
 
+  const mode = theme.palette.mode;
+  let color = indigo[50];
+  let textColor = "text-gray-600";
+  let languageTextColor = "text-gray-600";
+
+  if (mode === "dark") {
+    color = "rgba(127, 17, 224, 0.2)";
+    textColor = "white";
+    languageTextColor = "#9a8c98";
+  }
+
   return (
     <Card
-      className=" border-0 bg-slate-100 drop-shadow-md min-w-fit flex flex-col justify-between"
+      className=" border-0  drop-shadow-md min-w-fit flex flex-col justify-between"
+      sx={{ backgroundColor: color }}
       variant="outlined"
     >
       <Box className="flex justify-between">
@@ -42,16 +55,17 @@ export const ProfileCard = ({ repo, mainLanguage }) => {
         </Typography>
         <Box>
           <Typography
-            className="text-gray-600 font-mono hidden sm:inline-block "
+            className="font-mono hidden sm:inline-block "
             variant="h10 px-2 border-solid rounded-full border-2 m-1.5"
+            sx={{ color: textColor }}
           >
             {repoPrivate ? "Private" : "Public"}
           </Typography>
         </Box>
       </Box>
       <Typography
-        className="text-gray-600 font-mono p-2"
-        sx={{ display: "inline-block" }}
+        className="font-mono p-2"
+        sx={{ display: "inline-block", color: textColor }}
         variant="h10"
       >
         {repoDescription ? repoDescription : "No description"}
@@ -67,7 +81,11 @@ export const ProfileCard = ({ repo, mainLanguage }) => {
         ) : (
           ""
         )}
-        <Typography className="text-gray-600 font-mono" variant="h10">
+        <Typography
+          className="font-mono"
+          variant="h10"
+          sx={{ color: languageTextColor }}
+        >
           {mainLanguage ? mainLanguage : "No language used"}
         </Typography>
       </Box>

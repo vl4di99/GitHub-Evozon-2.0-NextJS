@@ -82,7 +82,7 @@ function Profile({ data }) {
                   className="border-4 border-fuchsia-900 w-64 h-64 "
                 />
                 <Typography className="font-mono mt-6" variant="h5">
-                  {userName}
+                  <b>{userName}</b>
                 </Typography>
                 <Typography
                   className="font-mono"

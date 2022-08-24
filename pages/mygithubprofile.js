@@ -69,10 +69,10 @@ function Profile({ data }) {
             )}
           </IconButton>
         </div>
-        <Container className="w-screen h-screen">
+        <Container className="w-screen min-h-screen">
           <Box className="flex pb-4 flex-wrap sm:flex-nowrap">
             <Box className="flex flex-col justify-start mt-28 p-0 ">
-              <Box className="ml-0 flex flex-col p-0 pr-20 sticky top-28  ">
+              <Box className="ml-0 flex flex-col p-0 pr-20 sticky top-28">
                 <Avatar
                   src={userAvatar}
                   alt="User Avatar"

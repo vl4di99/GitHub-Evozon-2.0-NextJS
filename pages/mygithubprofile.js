@@ -39,22 +39,8 @@ function Profile({ data }) {
 
   return (
     <Fragment>
-      <Box className=" w-full">
+      <Box className="fixed w-full z-10">
         <UserProfile />
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          width: "100%",
-          // alignItems: "center",
-          justifyContent: "center",
-          bgcolor: "background.default",
-          color: "text.primary",
-          borderRadius: 1,
-          p: 3,
-        }}
-      >
         <div className="flex items-center justify-end">
           <p>{theme.palette.mode} mode</p>
           <IconButton
@@ -69,6 +55,20 @@ function Profile({ data }) {
             )}
           </IconButton>
         </div>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+          // alignItems: "center",
+          justifyContent: "center",
+          bgcolor: "background.default",
+          color: "text.primary",
+          borderRadius: 1,
+          p: 3,
+        }}
+      >
         <Container className="w-screen min-h-screen">
           <Box className="flex pb-4 flex-wrap sm:flex-nowrap">
             <Box className="flex flex-col justify-start mt-28 p-0 ">

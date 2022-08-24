@@ -3,7 +3,7 @@ import { ProfileCard } from "./ProfileCard";
 
 import { Box } from "@mui/material";
 
-export const ProfileCardList = ({ reposData }) => {
+export const ProfileCardList = ({ reposData, theme }) => {
   const [reposToShow, setReposToShow] = useState(reposData);
 
   //    Sortare in functie de data creata a repo-ului in ordine descendenta
@@ -31,6 +31,7 @@ export const ProfileCardList = ({ reposData }) => {
               mainLanguage={mainLanguage}
               repo={repo}
               key={repo.id}
+              theme={theme}
             />
           );
         } else return;

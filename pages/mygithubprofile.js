@@ -124,8 +124,6 @@ function Profile({ data }) {
   );
 }
 
-// export default Profile;
-
 export default function ToggleColorMode({ url, data }) {
   const [mode, setMode] = React.useState("light");
   const colorMode = React.useMemo(

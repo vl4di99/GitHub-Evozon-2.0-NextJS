@@ -29,7 +29,6 @@ const style = {
 };
 
 function RepoData({ name, type, element }) {
-  console.log(element);
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {

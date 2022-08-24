@@ -12,8 +12,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Container } from "@mui/system";
 
 import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { repoInfo } from "../../atoms/repository";
 import Languages from "../LanguagesRatio/Languages";
 import RepoData from "./RepoData";
 
@@ -24,8 +22,6 @@ function RepositoryInfo({ avatar, name, content, commits, repo }) {
   const difference_Bet_Dates = Math.ceil(
     (currentDate.getTime() - commitDate.getTime()) / (1000 * 3600 * 24)
   );
-
-  console.log(commits);
 
   useEffect(() => {
     setRepoCommits(commits);
@@ -41,7 +37,7 @@ function RepositoryInfo({ avatar, name, content, commits, repo }) {
         />
         <Typography variant="h5">{name}</Typography>
 
-        <Box className="flex justify-center m-5 w-8/12">
+        <Box className="flex justify-center m-5 w-fit">
           <ThemeProvider
             theme={createTheme({
               palette: {
@@ -57,17 +53,17 @@ function RepositoryInfo({ avatar, name, content, commits, repo }) {
                   disablePadding
                   className="flex flex-row min-w-full items-center"
                 >
-                  <ListItemButton
-                    sx={{ height: 56 }}
-                    className="flex flex-row min-w-full justify-between cursor-default"
-                  >
+                  <ListItemButton className="flex flex-row min-w-full justify-between cursor-default ">
                     <Box className="flex flex-row items-center justify-center">
                       <Avatar
                         src={commits[0]?.committer.avatar_url}
                         alt="Committer image"
                         className="w-7 h-7"
                       />
-                      <Typography variant="h7" className="hover:underline m-3">
+                      <Typography
+                        variant="h7"
+                        className="hover:underline m-3 min-w-fit"
+                      >
                         <b>{commits[0]?.committer.login}</b>
                       </Typography>
                       <Typography
@@ -75,7 +71,9 @@ function RepositoryInfo({ avatar, name, content, commits, repo }) {
                         className="hover:underline hover:text-blue-700 m-2"
                       >
                         <a href={commits[0]?.html_url}>
-                          {commits[0]?.commit.message}
+                          {commits[0]?.commit.message.length > 150
+                            ? commits[0]?.commit.message.slice(0, 150) + "..."
+                            : commits[0]?.commit.message}
                         </a>
                       </Typography>
                     </Box>
